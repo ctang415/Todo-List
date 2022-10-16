@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+
+html {
+    background: url('./blue.png');
+    background-size: cover;
+}
+
+.flex {
+    display: flex;
+    font-family: 'Bebas Neue';
+    font-size: 6vw;
+    color: teal;
+    letter-spacing: 10px;
+    justify-content: center;
+    align-items: center;
+}
