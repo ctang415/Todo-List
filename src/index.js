@@ -10,15 +10,22 @@ function createInterface() {
     const weekInterface = document.createElement('li')
     const importantInterface = document.createElement('li')
     const project = document.createElement('div')
+    const plusButton = document.createElement('div')
     const tasks = document.createElement('div')
     const bottomInterface = document.createElement('div')
+    const modal = document.createElement('div')
+    const modalContent = document.createElement('div')
+
 
     headerText.classList.add('flex')
     projectInterface.classList.add('grid')
     topInterface.classList.add('top')
     bottomInterface.classList.add('bottom')
+    plusButton.classList.add('projectplus')
     project.classList.add('project')
     tasks.classList.add('tasks')
+    modal.classList.add('modal')
+    modalContent.classList.add('modal-content')
 
 
     headerText.textContent = ['Taskit'];
@@ -27,7 +34,14 @@ function createInterface() {
     weekInterface.textContent = ['This Week']
     importantInterface.textContent = ['Important']
     project.textContent = ['Projects']
+    plusButton.textContent = ["+"]
     tasks.textContent = ['All Tasks']
+    modalContent.textContent = ['Add New Project']
+
+    plusButton.addEventListener('click', function() {
+        modal.style.display ='block'
+        modalContent.style.display = 'block'
+    })
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -37,7 +51,10 @@ function createInterface() {
     projectInterface.appendChild(topInterface)
     projectInterface.appendChild(bottomInterface)
 
+    plusButton.appendChild(modal)
+    modal.appendChild(modalContent)
     bottomInterface.appendChild(project)
+    project.appendChild(plusButton)
     bottomInterface.appendChild(tasks)
 
 
@@ -48,3 +65,30 @@ function createInterface() {
 }
 
 document.getElementById('container').appendChild(createInterface());
+
+
+const myProjects = [];
+const myTodos = [];
+
+function storeProject() {
+    let newProject = new Project()
+    myProjects.push(newProject)
+}
+
+class Project {
+    constructor(title) {
+        this.title = title;
+    }
+}
+
+
+class Todo {
+    constructor(title, description, dueDate, priority, notes, checkList){
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.notes = notes;
+        this.checkList = checkList
+    }
+}
