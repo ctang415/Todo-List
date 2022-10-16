@@ -25,16 +25,39 @@ html {
     padding: 8px;
     
 }
+.top {
+    display: flex;
+    justify-content: space-evenly;
+    grid-row:1;
+    border-bottom: solid grey;
+}
 
 li {
     font-family: 'Bebas Neue';
     font-size: 1.5vw;
-    grid-row: 1;
-    border-bottom: solid black;
     list-style-type: none;
+}
+
+
+.bottom {
+    padding: 7px;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.project {
+    text-align: center;
+    font-family: 'Bebas Neue';
+    font-size: 2vw;
+    grid-column: 1;
+    border-right: solid grey;
+}
+
+.tasks {
+    font-family: 'Bebas Neue';
+    font-size: 2vw;
+    grid-column: 2;
     text-align: center;
 }
 
-.projects {
-    grid-row: 2;
-}
