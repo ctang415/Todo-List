@@ -14,3 +14,27 @@ html {
     justify-content: center;
     align-items: center;
 }
+
+.grid {
+    margin-left: 100px;
+    margin-right: 100px;
+    display: grid;
+    grid-template-rows: 1fr 20fr;
+    background-color: white;
+    border-radius: 20px;
+    padding: 8px;
+    
+}
+
+li {
+    font-family: 'Bebas Neue';
+    font-size: 1.5vw;
+    grid-row: 1;
+    border-bottom: solid black;
+    list-style-type: none;
+    text-align: center;
+}
+
+.projects {
+    grid-row: 2;
+}
