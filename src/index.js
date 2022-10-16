@@ -15,6 +15,9 @@ function createInterface() {
     const bottomInterface = document.createElement('div')
     const modal = document.createElement('div')
     const modalContent = document.createElement('div')
+    const buttons = document.createElement('div')
+    const closeButton = document.createElement('span')
+    const addButton = document.createElement('button')
 
 
     headerText.classList.add('flex')
@@ -26,6 +29,9 @@ function createInterface() {
     tasks.classList.add('tasks')
     modal.classList.add('modal')
     modalContent.classList.add('modal-content')
+    buttons.classList.add('buttons')
+    closeButton.classList.add('close')
+    
 
 
     headerText.textContent = ['Taskit'];
@@ -37,11 +43,21 @@ function createInterface() {
     plusButton.textContent = ["+"]
     tasks.textContent = ['All Tasks']
     modalContent.textContent = ['Add New Project']
+    addButton.textContent = ['Submit']
+    closeButton.textContent = ['X']
 
     plusButton.addEventListener('click', function() {
-        modal.style.display ='block'
+        modal.style.display = 'block'
         modalContent.style.display = 'block'
+        console.log('apple')
     })
+
+    closeButton.addEventListener('click', function(){
+        modal.style.display = 'none'
+        modalContent.style.display = 'none'
+        console.log('banana')
+    })
+
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -51,11 +67,15 @@ function createInterface() {
     projectInterface.appendChild(topInterface)
     projectInterface.appendChild(bottomInterface)
 
-    plusButton.appendChild(modal)
+ 
+    project.appendChild(modal)
     modal.appendChild(modalContent)
     bottomInterface.appendChild(project)
     project.appendChild(plusButton)
     bottomInterface.appendChild(tasks)
+    modalContent.appendChild(closeButton)
+    modalContent.appendChild(buttons)
+    buttons.appendChild(addButton)
 
 
     box.appendChild(headerText)

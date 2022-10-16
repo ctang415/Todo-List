@@ -95,3 +95,35 @@ li {
     width: 40%;
     height: 30%;
   }
+
+  .buttons {
+    display: flex;
+    margin-top: 150px;
+    gap: 15px;
+    justify-content: center;
+  }
+ 
+  .close {
+    color: black;
+    font-weight: lighter;
+    float: right;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .block-content {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    height: 30%;
+  }
+
+
+.none {
+    display:none;
+}
