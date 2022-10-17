@@ -9,6 +9,9 @@ function createInterface() {
     const todayInterface = document.createElement('li')
     const weekInterface = document.createElement('li')
     const importantInterface = document.createElement('li')
+    const projectPlus = document.createElement('div')
+    const projectList = document.createElement('div')
+    const leftSide = document.createElement('div')
     const project = document.createElement('div')
     const plusButton = document.createElement('div')
     const tasks = document.createElement('div')
@@ -28,7 +31,7 @@ function createInterface() {
     topInterface.classList.add('top')
     bottomInterface.classList.add('bottom')
     plusButton.classList.add('projectplus')
-    project.classList.add('project')
+    leftSide.classList.add('project')
     tasks.classList.add('tasks')
     modal.classList.add('modal')
     modalContent.classList.add('modal-content')
@@ -36,6 +39,9 @@ function createInterface() {
     closeButton.classList.add('close')
     addButton.classList.add('add')
     inputTitle.classList.add('inputTitle')
+    projectList.classList.add('stretch')
+
+    projectPlus.setAttribute('style', 'display: flex', 'flex-direction: row')
 
 
     headerText.textContent = ['Taskit'];
@@ -61,12 +67,32 @@ function createInterface() {
     })
 
     addButton.addEventListener('click', function() {
+        if(inputid.value === '')
+        {
+            inputid.value = 'untitled'
+            storeProject()
+            displayProject();
+            modal.style.display = 'none'
+            modalContent.style.display = 'none'
+            inputid.value = ''
+        }
+        else if (inputid.value != '') {
         console.log(myProjects)
         storeProject()
-        inputid.value = ''
+        displayProject();
         modal.style.display = 'none'
         modalContent.style.display = 'none'
+        inputid.value = ''
+        }
     })
+
+    function displayProject() {
+        const projectDiv = document.createElement('div')
+        projectDiv.textContent = inputid.value
+        projectDiv.classList.add('projectDiv')
+        projectDiv.setAttribute('style', 'text-align: center')
+        projectList.appendChild(projectDiv)
+    }
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -76,11 +102,17 @@ function createInterface() {
     projectInterface.appendChild(topInterface)
     projectInterface.appendChild(bottomInterface)
 
- 
+    bottomInterface.appendChild(leftSide)
+
+    leftSide.appendChild(projectPlus)
+    leftSide.appendChild(projectList)
+
+    projectPlus.appendChild(project)
+    projectPlus.appendChild(plusButton)
+    
+    
     project.appendChild(modal)
     modal.appendChild(modalContent)
-    bottomInterface.appendChild(project)
-    project.appendChild(plusButton)
     bottomInterface.appendChild(tasks)
     input.appendChild(inputTitle)
     input.appendChild(addButton)
@@ -125,3 +157,4 @@ function storeProject() {
     let newProject = new Project(inputid.value)
     myProjects.push(newProject)
 }
+
