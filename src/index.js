@@ -1,4 +1,8 @@
 import './style.css';
+import Edit from './edit.png'
+import Trash from './trash.png'
+import Star from './star.png'
+
 
 function createInterface() {
     const box = document.createElement('div')
@@ -26,6 +30,7 @@ function createInterface() {
     inputTitle.id = 'inputid'
 
 
+ 
     headerText.classList.add('flex')
     projectInterface.classList.add('grid')
     topInterface.classList.add('top')
@@ -88,9 +93,19 @@ function createInterface() {
 
     function displayProject() {
         const projectDiv = document.createElement('div')
+        const projectIcons = document.createElement('div')
+        const myEdit = new Image()
+        const myTrash = new Image()
+        myEdit.classList.add('image')
+        myTrash.classList.add('imageOther')
+        myEdit.src = Edit
+        myTrash.src = Trash
         projectDiv.textContent = inputid.value
         projectDiv.classList.add('projectDiv')
-        projectDiv.setAttribute('style', 'text-align: center')
+        projectIcons.classList.add('icons')
+        projectIcons.appendChild(myEdit)
+        projectIcons.appendChild(myTrash)
+        projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
     }
 
