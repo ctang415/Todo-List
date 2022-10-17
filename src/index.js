@@ -16,12 +16,17 @@ function createInterface() {
     const projectPlus = document.createElement('div')
     const projectList = document.createElement('div')
     const leftSide = document.createElement('div')
+    const rightSide = document.createElement('div')
     const project = document.createElement('div')
     const plusButton = document.createElement('div')
+    const header = document.createElement('div')
+    const addTask = document.createElement('button')
     const tasks = document.createElement('div')
     const bottomInterface = document.createElement('div')
     const modal = document.createElement('div')
     const modalContent = document.createElement('div')
+    const modalTask = document.createElement('div')
+    const modalTaskContent = document.createElement('div')
     const inputTitle = document.createElement('input')
     const input = document.createElement('div')
     const closeButton = document.createElement('span')
@@ -45,6 +50,9 @@ function createInterface() {
     addButton.classList.add('add')
     inputTitle.classList.add('inputTitle')
     projectList.classList.add('stretch')
+    addTask.classList.add('addTask')
+    modalTask.classList.add('modal')
+    modalTaskContent.classList.add('modalTask')
 
     projectPlus.setAttribute('style', 'display: flex', 'flex-direction: row')
 
@@ -56,10 +64,10 @@ function createInterface() {
     importantInterface.textContent = ['Important']
     project.textContent = ['Projects']
     plusButton.textContent = ["+"]
-    tasks.textContent = ['All Tasks']
     modalContent.textContent = ['Add New Project']
     addButton.textContent = ['Submit']
     closeButton.textContent = ['X']
+    addTask.textContent = ['add task']
 
     plusButton.addEventListener('click', function() {
         modal.style.display = 'block'
@@ -91,8 +99,14 @@ function createInterface() {
         }
     })
 
+
     function displayProject() {
         const projectDiv = document.createElement('div')
+        projectDiv.addEventListener('click', function() {
+            header.textContent = projectDiv.textContent
+            header.classList.add('header')
+            header.appendChild(addTask)
+        })
         const projectIcons = document.createElement('div')
         const myEdit = new Image()
         const myTrash = new Image()
@@ -108,6 +122,19 @@ function createInterface() {
         projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
     }
+
+    addTask.addEventListener('click', function() {
+        modalTask.style.display = 'block'
+        modalTaskContent.style.display = 'block'
+        console.log('banana')
+    })
+
+    let closeClone = closeButton.cloneNode(true)
+
+    closeClone.addEventListener('click', function() {
+        modalTask.style.display = 'none'
+        modalTaskContent.style.display = 'none'
+    })
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -125,16 +152,20 @@ function createInterface() {
     projectPlus.appendChild(project)
     projectPlus.appendChild(plusButton)
     
-    
+    rightSide.appendChild(header)
+
     project.appendChild(modal)
     modal.appendChild(modalContent)
-    bottomInterface.appendChild(tasks)
+    bottomInterface.appendChild(rightSide)
+    rightSide.appendChild(tasks)
     input.appendChild(inputTitle)
     input.appendChild(addButton)
     modalContent.appendChild(closeButton)
     modalContent.appendChild(input)
 
-
+    modalTask.appendChild(modalTaskContent)
+    rightSide.appendChild(modalTask)
+    modalTaskContent.appendChild(closeClone)
 
     box.appendChild(headerText)
     box.appendChild(projectInterface)
@@ -158,13 +189,11 @@ class Project {
 
 
 class Todo {
-    constructor(title, description, dueDate, priority, notes, checkList){
+    constructor(title, description, priority, dueDate){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
-        this.checkList = checkList
     }
 }
 
@@ -173,3 +202,7 @@ function storeProject() {
     myProjects.push(newProject)
 }
 
+function storeTodo() {
+    let newTodo = new Todo()
+    myTodos.push(newTodo)
+}

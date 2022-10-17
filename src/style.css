@@ -103,6 +103,18 @@ li {
     font-size: 2.5vw;
   }
 
+  .modalTask {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    height: 40%;
+    font-size: 2.5vw;
+
+  }
+
   .buttons {
     display: flex;
     flex-direction: column;
@@ -159,4 +171,24 @@ li {
 
 .icons {
     display: flex;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: 'Bebas Neue';
+    font-size: 3vw;
+}
+
+.addTask {
+    border-radius: 10px;
+    border-color: silver;
+    border-style: solid;
+    background-color: white;
+    width: 10%;
+    font-family: 'Bebas Neue';
+    cursor: pointer;
+    font-size: 1vw;
 }
