@@ -15,9 +15,12 @@ function createInterface() {
     const bottomInterface = document.createElement('div')
     const modal = document.createElement('div')
     const modalContent = document.createElement('div')
-    const buttons = document.createElement('div')
+    const inputTitle = document.createElement('input')
+    const input = document.createElement('div')
     const closeButton = document.createElement('span')
     const addButton = document.createElement('button')
+
+    inputTitle.id = 'inputid'
 
 
     headerText.classList.add('flex')
@@ -29,9 +32,10 @@ function createInterface() {
     tasks.classList.add('tasks')
     modal.classList.add('modal')
     modalContent.classList.add('modal-content')
-    buttons.classList.add('buttons')
+    input.classList.add('buttons')
     closeButton.classList.add('close')
-    
+    addButton.classList.add('add')
+    inputTitle.classList.add('inputTitle')
 
 
     headerText.textContent = ['Taskit'];
@@ -49,15 +53,20 @@ function createInterface() {
     plusButton.addEventListener('click', function() {
         modal.style.display = 'block'
         modalContent.style.display = 'block'
-        console.log('apple')
     })
 
     closeButton.addEventListener('click', function(){
         modal.style.display = 'none'
         modalContent.style.display = 'none'
-        console.log('banana')
     })
 
+    addButton.addEventListener('click', function() {
+        console.log(myProjects)
+        storeProject()
+        inputid.value = ''
+        modal.style.display = 'none'
+        modalContent.style.display = 'none'
+    })
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -73,9 +82,11 @@ function createInterface() {
     bottomInterface.appendChild(project)
     project.appendChild(plusButton)
     bottomInterface.appendChild(tasks)
+    input.appendChild(inputTitle)
+    input.appendChild(addButton)
     modalContent.appendChild(closeButton)
-    modalContent.appendChild(buttons)
-    buttons.appendChild(addButton)
+    modalContent.appendChild(input)
+
 
 
     box.appendChild(headerText)
@@ -87,13 +98,10 @@ function createInterface() {
 document.getElementById('container').appendChild(createInterface());
 
 
-const myProjects = [];
-const myTodos = [];
+let myProjects = [];
+let myTodos = [];
 
-function storeProject() {
-    let newProject = new Project()
-    myProjects.push(newProject)
-}
+
 
 class Project {
     constructor(title) {
@@ -111,4 +119,9 @@ class Todo {
         this.notes = notes;
         this.checkList = checkList
     }
+}
+
+function storeProject() {
+    let newProject = new Project(inputid.value)
+    myProjects.push(newProject)
 }
