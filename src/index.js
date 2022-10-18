@@ -130,6 +130,7 @@ function createInterface() {
         const projectDiv = document.createElement('div')
         const projectDivArea = document.createElement('div')
         projectDivArea.setAttribute('style', 'cursor: pointer')
+        projectDivArea.classList.add('projectDivArea')
 
         projectDivArea.addEventListener('click', function() {
             header.textContent = projectDiv.textContent

@@ -55,8 +55,6 @@ li {
     font-size: 2vw;
     grid-column: 1;
     border-right: solid grey;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     overflow:auto;
     height: 540px;
 }
@@ -154,6 +152,13 @@ li {
     justify-content: space-between;
 }
 
+.projectDivArea {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
+
+}
+
 .stretch {
     display: flex;
     flex-direction: column;
@@ -170,7 +175,6 @@ li {
 }
 
 .icons {
-    display: flex;
     cursor:pointer;
 }
 
