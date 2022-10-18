@@ -1,4 +1,5 @@
 import './style.css';
+import Expand from './expand.png'
 import Edit from './edit.png'
 import Trash from './trash.png'
 import Star from './star.png'
@@ -31,14 +32,17 @@ function createInterface() {
     const input = document.createElement('div')
     const closeButton = document.createElement('span')
     const addButton = document.createElement('button')
+    const form = document.createElement('form')
     const titleTask = document.createElement('label')
     const titleTaskInput = document.createElement('input')
     const descriptionTask = document.createElement('label')
     const descriptionTaskInput = document.createElement('input')
     const priorityTask = document.createElement('label')
     const taskDiv = document.createElement('div')
+    const dateTask = document.createElement('label')
+    const dateTaskInput = document.createElement('input')
 
-
+    dateTaskInput.type = 'date'
     inputTitle.id = 'inputid'
 
 
@@ -60,9 +64,11 @@ function createInterface() {
     addTask.classList.add('addTask')
     modalTask.classList.add('modal')
     modalTaskContent.classList.add('modalTask')
-    taskDiv.classList.add('taskDiv')
+    form.classList.add('taskDiv')
     titleTaskInput.classList.add('taskInputs')
     descriptionTaskInput.classList.add('taskInputs')
+
+
 
 
 
@@ -82,8 +88,9 @@ function createInterface() {
     closeButton.textContent = ['X']
     addTask.textContent = ['add task']
     titleTask.textContent = ['Title:']
-    descriptionTask.textContent = ['Description:']
+    descriptionTask.textContent = ['Notes:']
     priorityTask.textContent = ['Priority:']
+    dateTask.textContent = ['Due Date: ']
 
 
 
@@ -123,30 +130,27 @@ function createInterface() {
         const projectDiv = document.createElement('div')
         const projectDivArea = document.createElement('div')
         projectDivArea.setAttribute('style', 'cursor: pointer')
+
         projectDivArea.addEventListener('click', function() {
             header.textContent = projectDiv.textContent
             header.classList.add('header')
             header.appendChild(addTask)
         })
+
         const projectIcons = document.createElement('div')
-        const myEdit = new Image()
         const myTrash = new Image()
-        myEdit.classList.add('image')
         myTrash.classList.add('imageOther')
-        myEdit.src = Edit
         myTrash.src = Trash
+
+
         myTrash.addEventListener('click', function() {
-            projectIcons.removeChild(myEdit)
-            projectIcons.removeChild(myTrash)
-            projectDiv.removeChild(projectIcons)
             projectList.removeChild(projectDiv)
-            header.removeChild(addTask)
             header.textContent = ' '
         })
+
         projectDivArea.textContent = inputid.value
         projectDiv.classList.add('projectDiv')
         projectIcons.classList.add('icons')
-        projectIcons.appendChild(myEdit)
         projectIcons.appendChild(myTrash)
         projectDiv.appendChild(projectDivArea)
         projectDiv.appendChild(projectIcons)
@@ -167,12 +171,15 @@ function createInterface() {
     })
 
     let addClone = addButton.cloneNode(true)
+
+    addClone.type = 'submit'
+
     addClone.addEventListener('click', function() {
         console.log('banana')
     })
 
+    function createRadio() {
     var radio = ['Low', 'Medium', 'High']
-
     radio.forEach((value, index) =>{
     var label = document.createElement('label')
     label.setAttribute('style', 'padding: 10px')
@@ -181,9 +188,13 @@ function createInterface() {
     input.setAttribute('style', 'padding: 10px')
     input.type = 'radio'
     input.value = index
-    priorityTask.appendChild(label)
+    input.name = "priority"
     priorityTask.appendChild(input)
+    priorityTask.appendChild(label)
     })
+    }
+    createRadio();
+    
 
 
     topInterface.appendChild(homeInterface)
@@ -217,14 +228,17 @@ function createInterface() {
     rightSide.appendChild(modalTask)
     
     modalTaskContent.appendChild(closeClone)
-    taskDiv.appendChild(titleTask)
-    taskDiv.appendChild(titleTaskInput)
-    taskDiv.appendChild(descriptionTask)
-    taskDiv.appendChild(descriptionTaskInput)
-    taskDiv.appendChild(priorityTask)
+    form.appendChild(titleTask)
+    form.appendChild(titleTaskInput)
+    form.appendChild(descriptionTask)
+    form.appendChild(descriptionTaskInput)
+    form.appendChild(priorityTask)
+    form.appendChild(dateTask)
+    dateTask.appendChild(dateTaskInput)
+    taskDiv.appendChild(form)
     
     modalTaskContent.appendChild(taskDiv)
-    modalTaskContent.appendChild(addClone)
+    form.appendChild(addClone)
 
     box.appendChild(headerText)
     box.appendChild(projectInterface)
@@ -243,6 +257,10 @@ let myTodos = [];
 class Project {
     constructor(title) {
         this.title = title;
+        this.tasks = []
+    }
+    addTasksToDom() {
+
     }
 }
 
@@ -261,8 +279,5 @@ function storeProject() {
     myProjects.push(newProject)
 }
 
-function storeTodo() {
-    let newTodo = new Todo()
-    myTodos.push(newTodo)
-}
+
 
