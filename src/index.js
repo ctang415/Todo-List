@@ -44,6 +44,10 @@ function createInterface() {
 
     dateTaskInput.type = 'date'
     inputTitle.id = 'inputid'
+    inputTitle.maxLength = 35
+    titleTaskInput.v = ' '
+    descriptionTaskInput.placeholder = ' '
+    dateTaskInput.value = new Date().toLocaleDateString('en-CA')
 
 
  
@@ -67,12 +71,7 @@ function createInterface() {
     form.classList.add('taskDiv')
     titleTaskInput.classList.add('taskInputs')
     descriptionTaskInput.classList.add('taskInputs')
-
-
-
-
-
-    projectPlus.setAttribute('style', 'display: flex', 'flex-direction: row')
+    projectPlus.setAttribute('style', 'display: flex')
 
 
 
@@ -129,7 +128,6 @@ function createInterface() {
     function displayProject() {
         const projectDiv = document.createElement('div')
         const projectDivArea = document.createElement('div')
-        projectDivArea.setAttribute('style', 'cursor: pointer')
         projectDivArea.classList.add('projectDivArea')
 
         projectDivArea.addEventListener('click', function() {
@@ -171,31 +169,42 @@ function createInterface() {
         modalTaskContent.style.display = 'none'
     })
 
+    var radio = ['Low', 'Medium', 'High']
+    radio.forEach((value) =>{
+    var label = document.createElement('label')
+    label.setAttribute('style', 'padding: 10px')
+    label.textContent = value
+    var inputRadio = document.createElement('input')
+    inputRadio.setAttribute('style', 'padding: 10px')
+    inputRadio.type = 'radio'
+    inputRadio.value = value
+    inputRadio.name = "priority"
+    inputRadio.checked = true
+    priorityTask.appendChild(inputRadio)
+    priorityTask.appendChild(label)
+    })
+
     let addClone = addButton.cloneNode(true)
 
     addClone.type = 'submit'
 
-    addClone.addEventListener('click', function() {
-        console.log('banana')
+    addClone.addEventListener('click', function(e) {
+        const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+        let newTodo = new Todo(titleTaskInput.value, descriptionTaskInput.value, priorityTaskInput.value, dateTaskInput.value)
+        console.log(dateTaskInput.value)
+        console.log(priorityTaskInput.value)
+        form.reset()
+        e.preventDefault()
+        modalTask.style.display = 'none'
+        modalTaskContent.style.display = 'none'
+
     })
 
-    function createRadio() {
-    var radio = ['Low', 'Medium', 'High']
-    radio.forEach((value, index) =>{
-    var label = document.createElement('label')
-    label.setAttribute('style', 'padding: 10px')
-    label.textContent = value
-    var input = document.createElement('input')
-    input.setAttribute('style', 'padding: 10px')
-    input.type = 'radio'
-    input.value = index
-    input.name = "priority"
-    priorityTask.appendChild(input)
-    priorityTask.appendChild(label)
-    })
-    }
-    createRadio();
-    
+
+
+
+
+
 
 
     topInterface.appendChild(homeInterface)
@@ -235,11 +244,12 @@ function createInterface() {
     form.appendChild(descriptionTaskInput)
     form.appendChild(priorityTask)
     form.appendChild(dateTask)
+    form.appendChild(addClone)
     dateTask.appendChild(dateTaskInput)
     taskDiv.appendChild(form)
     
     modalTaskContent.appendChild(taskDiv)
-    form.appendChild(addClone)
+ 
 
     box.appendChild(headerText)
     box.appendChild(projectInterface)
@@ -251,7 +261,6 @@ document.getElementById('container').appendChild(createInterface());
 
 
 let myProjects = [];
-let myTodos = [];
 
 
 
@@ -260,8 +269,11 @@ class Project {
         this.title = title;
         this.tasks = []
     }
-    addTasksToDom() {
-
+    addTask(task) {
+        return this.tasks.push(task)
+    }
+    removeTask() {
+        return this.tasks.pop()
     }
 }
 
@@ -273,6 +285,18 @@ class Todo {
         this.dueDate = dueDate;
         this.priority = priority;
     }
+    changeTitle(newTitle) {
+        return this.title = newTitle
+    }
+    changeDescription(newDescription) {
+        return this.description = newDescription
+    }
+    changeDueDate(newDueDate) {
+        return this.dueDate = newDueDate
+    }
+    changePriority(newPriority){
+        return this.priority = newPriority
+    }
 }
 
 function storeProject() {
@@ -280,5 +304,9 @@ function storeProject() {
     myProjects.push(newProject)
 }
 
+function storeToDo() {
+
+
+}
 
 
