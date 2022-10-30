@@ -32,21 +32,27 @@ function createInterface() {
     const input = document.createElement('div')
     const closeButton = document.createElement('span')
     const addButton = document.createElement('button')
-    const form = document.createElement('form')
-    const titleTask = document.createElement('label')
-    const titleTaskInput = document.createElement('input')
-    const descriptionTask = document.createElement('label')
-    const descriptionTaskInput = document.createElement('input')
-    const priorityTask = document.createElement('label')
     const taskDiv = document.createElement('div')
-    const dateTask = document.createElement('label')
-    const dateTaskInput = document.createElement('input')
+    const form = document.getElementById('form')
+    const titleTask = document.getElementById('labelTitle')
+    const titleTaskInput = document.getElementById('title')
+    const descriptionTask = document.getElementById('labelNotes')
+    const descriptionTaskInput = document.getElementById('description')
+    const priorityTask = document.getElementById('labelPriority')
+    const lowLabel = document.getElementById('lowLabel')
+    const low = document.getElementById('low')
+    const mediumLabel = document.getElementById('mediumLabel')
+    const medium = document.getElementById('medium')
+    const highLabel = document.getElementById('highLabel')
+    const high = document.getElementById('high')
+    const dateTask = document.getElementById('labelDate')
+    const dateTaskInput = document.getElementById('date')
+    const submitButton = document.getElementById('submitButton')
 
-    dateTaskInput.type = 'date'
+
+
     inputTitle.id = 'inputid'
     inputTitle.maxLength = 35
-    titleTaskInput.v = ' '
-    descriptionTaskInput.placeholder = ' '
     dateTaskInput.value = new Date().toLocaleDateString('en-CA')
 
 
@@ -75,6 +81,7 @@ function createInterface() {
 
 
 
+
     headerText.textContent = ['Taskit'];
     homeInterface.textContent = ['Home']
     todayInterface.textContent = ['Today']
@@ -86,10 +93,7 @@ function createInterface() {
     addButton.textContent = ['Submit']
     closeButton.textContent = ['X']
     addTask.textContent = ['add task']
-    titleTask.textContent = ['Title:']
-    descriptionTask.textContent = ['Notes:']
-    priorityTask.textContent = ['Priority:']
-    dateTask.textContent = ['Due Date: ']
+ 
 
 
 
@@ -102,6 +106,7 @@ function createInterface() {
     closeButton.addEventListener('click', function(){
         modal.style.display = 'none'
         modalContent.style.display = 'none'
+        inputid.value = ''
     })
 
     addButton.addEventListener('click', function() {
@@ -154,6 +159,7 @@ function createInterface() {
         projectDiv.appendChild(projectDivArea)
         projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
+        console.log(myProjects)
     }
 
     addTask.addEventListener('click', function() {
@@ -169,41 +175,21 @@ function createInterface() {
         modalTaskContent.style.display = 'none'
     })
 
-    var radio = ['Low', 'Medium', 'High']
-    radio.forEach((value) =>{
-    var label = document.createElement('label')
-    label.setAttribute('style', 'padding: 10px')
-    label.textContent = value
-    var inputRadio = document.createElement('input')
-    inputRadio.setAttribute('style', 'padding: 10px')
-    inputRadio.type = 'radio'
-    inputRadio.value = value
-    inputRadio.name = "priority"
-    inputRadio.checked = true
-    priorityTask.appendChild(inputRadio)
-    priorityTask.appendChild(label)
-    })
 
-    let addClone = addButton.cloneNode(true)
 
-    addClone.type = 'submit'
 
-    addClone.addEventListener('click', function(e) {
+
+    submitButton.addEventListener('click', function(e) {
         const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
         let newTodo = new Todo(titleTaskInput.value, descriptionTaskInput.value, priorityTaskInput.value, dateTaskInput.value)
-        console.log(dateTaskInput.value)
-        console.log(priorityTaskInput.value)
+        console.log(e)
+        console.log(newTodo)
         form.reset()
         e.preventDefault()
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
-
+        dateTaskInput.value = new Date().toLocaleDateString('en-CA')
     })
-
-
-
-
-
 
 
 
@@ -237,15 +223,22 @@ function createInterface() {
     modalTask.appendChild(modalTaskContent)
     rightSide.appendChild(modalTask)
     
-    modalTaskContent.appendChild(closeClone)
+
     form.appendChild(titleTask)
     form.appendChild(titleTaskInput)
     form.appendChild(descriptionTask)
     form.appendChild(descriptionTaskInput)
+    priorityTask.appendChild(low)
+    priorityTask.appendChild(lowLabel)
+    priorityTask.appendChild(medium)
+    priorityTask.appendChild(mediumLabel)
+    priorityTask.appendChild(high)
+    priorityTask.appendChild(highLabel)
     form.appendChild(priorityTask)
     form.appendChild(dateTask)
-    form.appendChild(addClone)
+    form.appendChild(submitButton)
     dateTask.appendChild(dateTaskInput)
+    taskDiv.appendChild(closeClone)
     taskDiv.appendChild(form)
     
     modalTaskContent.appendChild(taskDiv)
@@ -275,7 +268,12 @@ class Project {
     removeTask() {
         return this.tasks.pop()
     }
+    logList(){
+        console.log(this.tasks)
+    }
 }
+
+
 
 
 class Todo {
@@ -284,6 +282,8 @@ class Todo {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.id = "id" + Math.random().toString(16).slice(2)
+
     }
     changeTitle(newTitle) {
         return this.title = newTitle
@@ -304,9 +304,6 @@ function storeProject() {
     myProjects.push(newProject)
 }
 
-function storeToDo() {
 
-
-}
 
 

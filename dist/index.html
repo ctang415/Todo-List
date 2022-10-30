@@ -7,7 +7,32 @@
     <title>Todo List</title>
 </head>
 <body>
-    <div id="container"></div>
+    <div id="container">
+        <form id="form">
+            <div class="form">
+                <label id="labelTitle">Title: </label>
+                <input type="text" id="title">
+            </div>
+            <div class="form">
+                <label id="labelNotes">Notes: </label>
+                <input type="text" id="description">
+            </div>
+            <div class="form">
+                <label id="labelPriority">Priority: </label>
+                <input type="radio" name="priority" value="Low" id="low" checked>
+                <label id="lowLabel">Low</label>
+                <input type="radio" name="priority" value="Medium" id="medium">
+                <label id="mediumLabel">Medium</label>
+                <input type="radio" name="priority" value="High" id="high">
+                <label id="highLabel">High</label>
+            </div>
+            <div class="form">
+                <label id="labelDate">Date Due: </label>
+                <input type="date" id="date">
+            </div>
+            <button type="submit" id="submitButton">Submit</button>
+        </form>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
