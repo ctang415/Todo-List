@@ -21,7 +21,7 @@ function createInterface() {
     const project = document.createElement('div')
     const plusButton = document.createElement('div')
     const header = document.createElement('div')
-    const addTask = document.createElement('button')
+    const addTaskButton = document.createElement('button')
     const tasks = document.createElement('div')
     const bottomInterface = document.createElement('div')
     const modal = document.createElement('div')
@@ -71,7 +71,7 @@ function createInterface() {
     addButton.classList.add('add')
     inputTitle.classList.add('inputTitle')
     projectList.classList.add('stretch')
-    addTask.classList.add('addTask')
+    addTaskButton.classList.add('addTask')
     modalTask.classList.add('modal')
     modalTaskContent.classList.add('modalTask')
     form.classList.add('taskDiv')
@@ -92,7 +92,7 @@ function createInterface() {
     modalContent.textContent = ['Add New Project']
     addButton.textContent = ['Submit']
     closeButton.textContent = ['X']
-    addTask.textContent = ['add task']
+    addTaskButton.textContent = ['add task']
  
 
 
@@ -134,11 +134,13 @@ function createInterface() {
         const projectDiv = document.createElement('div')
         const projectDivArea = document.createElement('div')
         projectDivArea.classList.add('projectDivArea')
+        projectDivArea.setAttribute("id", currentProject)
+        console.log(projectDivArea.id)
 
         projectDivArea.addEventListener('click', function() {
             header.textContent = projectDiv.textContent
             header.classList.add('header')
-            header.appendChild(addTask)
+            header.appendChild(addTaskButton)
         })
 
         const projectIcons = document.createElement('div')
@@ -148,11 +150,14 @@ function createInterface() {
 
 
         myTrash.addEventListener('click', function() {
+            let i = myProjects.findIndex(item => item.id === projectDivArea.id)
+            myProjects.splice(i, 1)
             projectList.removeChild(projectDiv)
             header.textContent = ' '
         })
-
-        projectDivArea.textContent = inputid.value
+        let index = myProjects.findIndex(item => item.id === projectDivArea.id)
+        console.log(index)
+        projectDivArea.textContent = myProjects[index].title
         projectDiv.classList.add('projectDiv')
         projectIcons.classList.add('icons')
         projectIcons.appendChild(myTrash)
@@ -162,7 +167,7 @@ function createInterface() {
         console.log(myProjects)
     }
 
-    addTask.addEventListener('click', function() {
+    addTaskButton.addEventListener('click', function() {
         modalTask.style.display = 'block'
         modalTaskContent.style.display = 'block'
     })
@@ -254,6 +259,8 @@ document.getElementById('container').appendChild(createInterface());
 
 
 let myProjects = [];
+let currentProject;
+
 
 
 
@@ -261,6 +268,7 @@ class Project {
     constructor(title) {
         this.title = title;
         this.tasks = []
+        this.id = "id" + Math.random().toString(16).slice(2)
     }
     addTask(task) {
         return this.tasks.push(task)
@@ -268,8 +276,8 @@ class Project {
     removeTask() {
         return this.tasks.pop()
     }
-    logList(){
-        console.log(this.tasks)
+    getId(){
+        return this.id
     }
 }
 
@@ -302,8 +310,8 @@ class Todo {
 function storeProject() {
     let newProject = new Project(inputid.value)
     myProjects.push(newProject)
+    currentProject = newProject.getId();
+    console.log(currentProject)
 }
-
-
 
 
