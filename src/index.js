@@ -2,7 +2,6 @@ import './style.css';
 import Expand from './expand.png'
 import Edit from './edit.png'
 import Trash from './trash.png'
-import Star from './star.png'
 
 
 function createInterface() {
@@ -49,7 +48,9 @@ function createInterface() {
     const dateTaskInput = document.getElementById('date')
     const submitButton = document.getElementById('submitButton')
 
-
+    let currentIndex;
+    let currentEdit;
+    let currentDiv;
 
     inputTitle.id = 'inputid'
     inputTitle.maxLength = 35
@@ -63,6 +64,7 @@ function createInterface() {
     bottomInterface.classList.add('bottom')
     plusButton.classList.add('projectplus')
     leftSide.classList.add('project')
+    rightSide.classList.add('rightSide')
     tasks.classList.add('tasks')
     modal.classList.add('modal')
     modalContent.classList.add('modal-content')
@@ -79,7 +81,19 @@ function createInterface() {
     descriptionTaskInput.classList.add('taskInputs')
     projectPlus.setAttribute('style', 'display: flex')
 
+    let modalClone = modal.cloneNode(true)
+    let modalContentClone = modalContent.cloneNode(true)
+    let addButtonClone = addButton.cloneNode(true)
+    const editInput  = document.createElement('input')
+    const editInputDiv = document.createElement('div')
 
+
+    editInputDiv.classList.add('buttons')
+    editInput.classList.add('inputTitle')
+
+
+    modalContentClone.textContent = ['Edit Project']
+    addButtonClone.textContent = ['Submit']
 
 
     headerText.textContent = ['Taskit'];
@@ -93,8 +107,6 @@ function createInterface() {
     addButton.textContent = ['Submit']
     closeButton.textContent = ['X']
     addTaskButton.textContent = ['add task']
- 
-
 
 
 
@@ -135,18 +147,35 @@ function createInterface() {
         const projectDivArea = document.createElement('div')
         projectDivArea.classList.add('projectDivArea')
         projectDivArea.setAttribute("id", currentProject)
-        console.log(projectDivArea.id)
+    
 
         projectDivArea.addEventListener('click', function() {
-            header.textContent = projectDiv.textContent
+            let index = myProjects.findIndex(item => item.id === projectDivArea.id)
+            header.textContent = myProjects[index].title
             header.classList.add('header')
             header.appendChild(addTaskButton)
+            currentIndex = index
         })
 
         const projectIcons = document.createElement('div')
         const myTrash = new Image()
+        const myEdit = new Image()
         myTrash.classList.add('imageOther')
+        myEdit.classList.add('image')
         myTrash.src = Trash
+        myEdit.src = Edit
+        myEdit.setAttribute('id', currentProject)
+        currentEdit = myProjects.findIndex(item => item.id === projectDivArea.id)
+
+
+        myEdit.addEventListener('click', function(){
+            currentDiv = this.id
+            modalClone.style.display = 'block'
+            modalContentClone.style.display = 'block'
+            let value = myProjects.findIndex(item => item.id === projectDivArea.id)
+            editInput.value = myProjects[value].title
+            console.log(myProjects[value].title)
+        })
 
 
         myTrash.addEventListener('click', function() {
@@ -155,17 +184,40 @@ function createInterface() {
             projectList.removeChild(projectDiv)
             header.textContent = ' '
         })
+
         let index = myProjects.findIndex(item => item.id === projectDivArea.id)
-        console.log(index)
+
+
+
+
         projectDivArea.textContent = myProjects[index].title
+        console.log(myProjects[index].title)
         projectDiv.classList.add('projectDiv')
         projectIcons.classList.add('icons')
+        projectIcons.appendChild(myEdit)
         projectIcons.appendChild(myTrash)
         projectDiv.appendChild(projectDivArea)
         projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
         console.log(myProjects)
+
+
+        
     }
+
+    addButtonClone.addEventListener('click', function(){
+        console.log(myProjects[currentEdit])
+        myProjects[currentEdit].changeProjectTitle(editInput.value)
+        header.textContent = myProjects[currentEdit].title
+        header.classList.add('header')
+        header.appendChild(addTaskButton)
+        let editDiv = currentDiv
+        let divId = document.getElementById(editDiv)
+        divId.textContent = myProjects[currentEdit].title
+        modalClone.style.display = 'none'
+        modalContentClone.style.display = 'none'
+    })
+
 
     addTaskButton.addEventListener('click', function() {
         modalTask.style.display = 'block'
@@ -173,6 +225,12 @@ function createInterface() {
     })
 
     let closeClone = closeButton.cloneNode(true)
+    let closeModalClone = closeButton.cloneNode(true)
+
+    closeModalClone.addEventListener('click', function() {
+        modalClone.style.display = 'none'
+        modalContentClone.style.display = 'none'
+    })
 
 
     closeClone.addEventListener('click', function() {
@@ -180,21 +238,81 @@ function createInterface() {
         modalTaskContent.style.display = 'none'
     })
 
-
-
-
+    let taskId;
 
     submitButton.addEventListener('click', function(e) {
         const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
         let newTodo = new Todo(titleTaskInput.value, descriptionTaskInput.value, priorityTaskInput.value, dateTaskInput.value)
-        console.log(e)
-        console.log(newTodo)
+        myProjects[currentIndex].addTask(newTodo)
+        console.log(newTodo.getTodoID())
+        taskId = newTodo.getTodoID()
+        console.log(taskId)
+        console.log(myProjects[currentIndex].getList())
+
+
+        createTasks();
         form.reset()
         e.preventDefault()
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
         dateTaskInput.value = new Date().toLocaleDateString('en-CA')
     })
+
+    function createTasks() {
+        const taskBox = document.createElement('div')
+        const taskBoxList = document.createElement('div')
+        const taskBoxArea = document.createElement('div')
+        const taskSpanTitle = document.createElement('span')
+        const taskSpanDate = document.createElement('span')
+        const checkBox = document.createElement('input')
+        checkBox.setAttribute('type', 'checkbox')
+        checkBox.classList.add('checkBox')
+        taskBoxList.classList.add('stretchTask')
+        taskBox.classList.add('taskBoxes')
+        taskBoxArea.classList.add('taskArea')
+        const taskIcons = document.createElement('div')
+        const myTrash = new Image()
+        const myEdit = new Image()
+        const myExpand = new Image()
+        taskIcons.classList.add('taskIcons')
+        myExpand.src = Expand
+        myEdit.src = Edit
+        myTrash.src = Trash
+        myExpand.setAttribute('style', 'height: 2.8vw')
+        myEdit.setAttribute('style', 'height: 2.6vw')
+        myTrash.setAttribute('style', 'height: 2.9vw')
+        myExpand.classList.add('cursor')
+        myEdit.classList.add('cursor')
+        myTrash.classList.add('cursor')
+        let taskIndex = myProjects[currentIndex].tasks.findIndex(item => item.id === taskId)
+        console.log(taskIndex)
+        taskSpanTitle.textContent = myProjects[currentIndex].tasks[taskIndex].title
+        taskSpanDate.textContent = myProjects[currentIndex].tasks[taskIndex].dueDate
+        console.log(myProjects[currentIndex])
+        console.log(myProjects[currentIndex].tasks[taskIndex].title)
+        console.log(myProjects[currentIndex].tasks[taskIndex].description)
+        console.log(myProjects[currentIndex].tasks[taskIndex].dueDate)
+        console.log(myProjects[currentIndex].tasks[taskIndex].priority)
+        taskBox.appendChild(checkBox)
+        taskBoxArea.appendChild(taskSpanTitle)
+        taskBoxArea.appendChild(taskSpanDate)
+        taskBox.appendChild(taskBoxArea)
+        taskBox.appendChild(taskIcons)
+        taskIcons.appendChild(myExpand)
+        taskIcons.appendChild(myEdit)
+        taskIcons.appendChild(myTrash)
+        taskBoxList.appendChild(taskBox)
+        rightSide.appendChild(taskBoxList)
+
+        checkBox.addEventListener('change', function(){
+            if(this.checked) {
+                taskSpanTitle.style.setProperty('text-decoration', 'line-through')
+            }
+            else {
+                taskSpanTitle.style.setProperty('text-decoration', 'none')
+            }
+        })
+    }
 
 
 
@@ -215,6 +333,14 @@ function createInterface() {
     projectPlus.appendChild(plusButton)
     
     rightSide.appendChild(header)
+
+    modalClone.appendChild(modalContentClone)
+    project.appendChild(modalClone)
+
+    modalContentClone.appendChild(closeModalClone)
+    editInputDiv.appendChild(editInput)
+    editInputDiv.appendChild(addButtonClone)
+    modalContentClone.appendChild(editInputDiv)
 
     project.appendChild(modal)
     modal.appendChild(modalContent)
@@ -276,8 +402,14 @@ class Project {
     removeTask() {
         return this.tasks.pop()
     }
+    getList() {
+        return this.tasks
+    }
     getId(){
         return this.id
+    }
+    changeProjectTitle(newTitle){
+        return this.title = newTitle
     }
 }
 
@@ -288,8 +420,8 @@ class Todo {
     constructor(title, description, priority, dueDate){
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
         this.priority = priority;
+        this.dueDate = dueDate;
         this.id = "id" + Math.random().toString(16).slice(2)
 
     }
@@ -304,6 +436,9 @@ class Todo {
     }
     changePriority(newPriority){
         return this.priority = newPriority
+    }
+    getTodoID() {
+        return this.id
     }
 }
 
