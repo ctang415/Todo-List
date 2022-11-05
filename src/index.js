@@ -47,6 +47,8 @@ function createInterface() {
     const dateTask = document.getElementById('labelDate')
     const dateTaskInput = document.getElementById('date')
     const submitButton = document.getElementById('submitButton')
+    const taskBoxList = document.createElement('div')
+    taskBoxList.classList.add('stretchTask')
 
     let currentIndex;
     let currentEdit;
@@ -81,12 +83,16 @@ function createInterface() {
     descriptionTaskInput.classList.add('taskInputs')
     projectPlus.setAttribute('style', 'display: flex')
 
-    let modalClone = modal.cloneNode(true)
-    let modalContentClone = modalContent.cloneNode(true)
-    let addButtonClone = addButton.cloneNode(true)
+    const modalClone = modal.cloneNode(true)
+    const modalContentClone = modalContent.cloneNode(true)
+    const addButtonClone = addButton.cloneNode(true)
     const editInput  = document.createElement('input')
     const editInputDiv = document.createElement('div')
 
+    /*
+    const modalTaskClone = modalTask.cloneNode(true)
+    const modalTaskContentClone = modalTaskContent.cloneNode(true)
+    */
 
     editInputDiv.classList.add('buttons')
     editInput.classList.add('inputTitle')
@@ -186,12 +192,7 @@ function createInterface() {
         })
 
         let index = myProjects.findIndex(item => item.id === projectDivArea.id)
-
-
-
-
         projectDivArea.textContent = myProjects[index].title
-        console.log(myProjects[index].title)
         projectDiv.classList.add('projectDiv')
         projectIcons.classList.add('icons')
         projectIcons.appendChild(myEdit)
@@ -200,9 +201,6 @@ function createInterface() {
         projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
         console.log(myProjects)
-
-
-        
     }
 
     addButtonClone.addEventListener('click', function(){
@@ -243,13 +241,12 @@ function createInterface() {
     submitButton.addEventListener('click', function(e) {
         const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
         let newTodo = new Todo(titleTaskInput.value, descriptionTaskInput.value, priorityTaskInput.value, dateTaskInput.value)
-        myProjects[currentIndex].addTask(newTodo)
         console.log(newTodo.getTodoID())
         taskId = newTodo.getTodoID()
+        myProjects[currentIndex].addTask(newTodo)
         console.log(taskId)
         console.log(myProjects[currentIndex].getList())
-
-
+        console.log(myProjects)
         createTasks();
         form.reset()
         e.preventDefault()
@@ -260,14 +257,12 @@ function createInterface() {
 
     function createTasks() {
         const taskBox = document.createElement('div')
-        const taskBoxList = document.createElement('div')
         const taskBoxArea = document.createElement('div')
         const taskSpanTitle = document.createElement('span')
         const taskSpanDate = document.createElement('span')
         const checkBox = document.createElement('input')
         checkBox.setAttribute('type', 'checkbox')
         checkBox.classList.add('checkBox')
-        taskBoxList.classList.add('stretchTask')
         taskBox.classList.add('taskBoxes')
         taskBoxArea.classList.add('taskArea')
         const taskIcons = document.createElement('div')
@@ -284,7 +279,33 @@ function createInterface() {
         myExpand.classList.add('cursor')
         myEdit.classList.add('cursor')
         myTrash.classList.add('cursor')
-        let taskIndex = myProjects[currentIndex].tasks.findIndex(item => item.id === taskId)
+        taskBox.setAttribute('id', taskId)
+
+
+
+        myTrash.addEventListener('click', function() {
+            let findTask = myProjects[currentIndex].tasks.findIndex(item => item.id === taskBox.id)
+            console.log(taskBox.id)
+            console.log(currentIndex)
+            console.log(findTask)
+            myProjects[currentIndex].removeTask(findTask)
+            taskBoxList.removeChild(taskBox)
+            console.log(myProjects)
+        })
+
+
+        myEdit.addEventListener('click', function(){
+            const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+            titleTaskInput.value = myProjects[currentIndex].tasks[taskIndex].title
+            descriptionTaskInput.value = myProjects[currentIndex].tasks[taskIndex].description
+            priorityTaskInput.value = myProjects[currentIndex].tasks[taskIndex].priority
+            dateTaskInput.value = myProjects[currentIndex].tasks[taskIndex].dueDate
+            modalTask.style.display = 'block'
+            modalTaskContent.style.display = 'block'
+        })
+
+
+        let taskIndex = myProjects[currentIndex].tasks.findIndex(item => item.id === taskBox.id)
         console.log(taskIndex)
         taskSpanTitle.textContent = myProjects[currentIndex].tasks[taskIndex].title
         taskSpanDate.textContent = myProjects[currentIndex].tasks[taskIndex].dueDate
@@ -302,7 +323,7 @@ function createInterface() {
         taskIcons.appendChild(myEdit)
         taskIcons.appendChild(myTrash)
         taskBoxList.appendChild(taskBox)
-        rightSide.appendChild(taskBoxList)
+
 
         checkBox.addEventListener('change', function(){
             if(this.checked) {
@@ -313,7 +334,6 @@ function createInterface() {
             }
         })
     }
-
 
 
     topInterface.appendChild(homeInterface)
@@ -353,7 +373,11 @@ function createInterface() {
 
     modalTask.appendChild(modalTaskContent)
     rightSide.appendChild(modalTask)
-    
+
+    /*
+    modalTaskClone.appendChild(modalTaskContentClone)
+    rightSide.appendChild(modalTaskClone)
+    */
 
     form.appendChild(titleTask)
     form.appendChild(titleTaskInput)
@@ -374,7 +398,7 @@ function createInterface() {
     
     modalTaskContent.appendChild(taskDiv)
  
-
+    rightSide.appendChild(taskBoxList)
     box.appendChild(headerText)
     box.appendChild(projectInterface)
     
@@ -390,6 +414,7 @@ let currentProject;
 
 
 
+
 class Project {
     constructor(title) {
         this.title = title;
@@ -399,8 +424,8 @@ class Project {
     addTask(task) {
         return this.tasks.push(task)
     }
-    removeTask() {
-        return this.tasks.pop()
+    removeTask(index) {
+        return this.tasks.splice(index, 1)
     }
     getList() {
         return this.tasks

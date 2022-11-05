@@ -64,7 +64,6 @@ li {
     flex-direction: column;
     overflow:auto;
     height: 540px;
-    gap: 10px;
 }
 
 .projectplus {
@@ -178,7 +177,7 @@ li {
 .stretchTask {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 10px;
 }
 
 
