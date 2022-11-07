@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
 html {
     background: url('./blue.png');
@@ -85,6 +86,8 @@ li {
     grid-column: 2;
     text-align: center;
 }
+
+
 
 .modal {
     display: none; 
@@ -229,39 +232,69 @@ li {
     height: 1.8vw;
 }
 
-#submitButton {
+.taskLabels {
+    font-size: 2vw;
+}
+
+#submitButton, #submitButtonTwo {
     border-radius: 7px;
     padding: 10px;
     width: 100px;
     margin-top: 10px;
 }
 
-.taskBoxes {
+
+.taskBoxesGrid {
     display: grid;
-    grid-template-columns: 1fr 6fr 6fr;
+    grid-template-columns: 5% 90% 5%;
+    grid-template-rows: minmax(1fr 1fr);
     margin-left: 10px;
     background-color:rgb(228, 241, 245); 
     font-size: 2.0vw;
     padding: 15px;
     border-radius: 5px;
+    justify-content: space-between;
     align-items: center;
-    grid-column-gap: 5px;
+    gap: 5px;
+    row-gap: 15px;
+}
+
+
+.taskBoxDescription {
+    display: flex;
+    font-family: 'Poppins';
+    font-size: 1.7vw;
+}
+
+.taskBoxPriority {
+    display: flex;
+    font-family: 'Poppins';
+    font-size: 1.7vw;
+}
+
+.taskBoxExpand {
+    border-top: solid black;
+    grid-row: 2;
+    grid-column: 2;
+    font-family: "Bebas Neue";
+    overflow:scroll;
+    height: 60px;
+    padding-top: 5px;
 }
 
 .taskArea {
-    grid-column: 2;
     display: flex;
     flex-direction: column;
     font-family: 'Bebas Neue';
 }
 
 .taskIcons {
-    grid-column: 3;
     display:flex;
     flex-direction: row;
     align-self: center;
     justify-content: flex-end;
     gap: 3px;
+    margin-right: 5px;
 }
 
 .cursor {

@@ -49,6 +49,7 @@ function createInterface() {
     const submitButton = document.getElementById('submitButton')
     const taskBoxList = document.createElement('div')
     taskBoxList.classList.add('stretchTask')
+    const submitButtonTwo = document.getElementById('submitButtonTwo')
 
     let currentIndex;
     let currentEdit;
@@ -78,8 +79,11 @@ function createInterface() {
     addTaskButton.classList.add('addTask')
     modalTask.classList.add('modal')
     modalTaskContent.classList.add('modalTask')
-    form.classList.add('taskDiv')
     titleTaskInput.classList.add('taskInputs')
+    titleTask.classList.add('taskLabels')
+    descriptionTask.classList.add('taskLabels')
+    priorityTask.classList.add('taskLabels')
+    dateTask.classList.add('taskLabels')
     descriptionTaskInput.classList.add('taskInputs')
     projectPlus.setAttribute('style', 'display: flex')
 
@@ -89,10 +93,6 @@ function createInterface() {
     const editInput  = document.createElement('input')
     const editInputDiv = document.createElement('div')
 
-    /*
-    const modalTaskClone = modalTask.cloneNode(true)
-    const modalTaskContentClone = modalTaskContent.cloneNode(true)
-    */
 
     editInputDiv.classList.add('buttons')
     editInput.classList.add('inputTitle')
@@ -153,7 +153,6 @@ function createInterface() {
         const projectDivArea = document.createElement('div')
         projectDivArea.classList.add('projectDivArea')
         projectDivArea.setAttribute("id", currentProject)
-    
 
         projectDivArea.addEventListener('click', function() {
             let index = myProjects.findIndex(item => item.id === projectDivArea.id)
@@ -176,6 +175,7 @@ function createInterface() {
 
         myEdit.addEventListener('click', function(){
             currentDiv = this.id
+            console.log(currentDiv)
             modalClone.style.display = 'block'
             modalContentClone.style.display = 'block'
             let value = myProjects.findIndex(item => item.id === projectDivArea.id)
@@ -188,7 +188,7 @@ function createInterface() {
             let i = myProjects.findIndex(item => item.id === projectDivArea.id)
             myProjects.splice(i, 1)
             projectList.removeChild(projectDiv)
-            header.textContent = ' '
+            header.textContent = ''
         })
 
         let index = myProjects.findIndex(item => item.id === projectDivArea.id)
@@ -218,6 +218,10 @@ function createInterface() {
 
 
     addTaskButton.addEventListener('click', function() {
+        titleTaskInput.value = ''
+        descriptionTaskInput.value = ''
+        dateTaskInput.value = new Date().toLocaleDateString('en-CA')
+        submitButtonTwo.style.display = 'none'
         modalTask.style.display = 'block'
         modalTaskContent.style.display = 'block'
     })
@@ -232,6 +236,11 @@ function createInterface() {
 
 
     closeClone.addEventListener('click', function() {
+        if(submitButton.style.display = 'none'){
+            submitButton.style.display = 'block'
+        }
+        titleTaskInput.value = ''
+        descriptionTaskInput.value = ''
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
     })
@@ -254,6 +263,9 @@ function createInterface() {
         modalTaskContent.style.display = 'none'
         dateTaskInput.value = new Date().toLocaleDateString('en-CA')
     })
+    let currentTask;
+
+
 
     function createTasks() {
         const taskBox = document.createElement('div')
@@ -261,9 +273,12 @@ function createInterface() {
         const taskSpanTitle = document.createElement('span')
         const taskSpanDate = document.createElement('span')
         const checkBox = document.createElement('input')
+        const taskBoxExpand = document.createElement('div')
+        const taskSpanDescription = document.createElement('div')
+        const taskSpanPriority = document.createElement('div')
         checkBox.setAttribute('type', 'checkbox')
         checkBox.classList.add('checkBox')
-        taskBox.classList.add('taskBoxes')
+        taskBox.classList.add('taskBoxesGrid')
         taskBoxArea.classList.add('taskArea')
         const taskIcons = document.createElement('div')
         const myTrash = new Image()
@@ -280,6 +295,29 @@ function createInterface() {
         myEdit.classList.add('cursor')
         myTrash.classList.add('cursor')
         taskBox.setAttribute('id', taskId)
+        taskSpanTitle.setAttribute('data-id', 'title')
+        taskSpanDate.setAttribute('data-id', 'date')
+        taskBoxExpand.classList.add('taskBoxExpand')
+        taskSpanDescription.classList.add('taskBoxDescription')
+        taskSpanDescription.setAttribute('data-id', 'description')
+        taskSpanPriority.setAttribute('data-id', 'priority')
+        taskSpanPriority.classList.add('taskBoxPriority')
+
+      
+
+        taskBox.addEventListener('click', function(){
+            currentTask = this.id
+            console.log(currentTask)
+        })
+
+        myExpand.addEventListener('click', function(){
+            if(taskBoxExpand.style.display === 'none') {
+            taskBoxExpand.style.display = 'block'
+            }
+            else {
+                taskBoxExpand.style.display = 'none'
+            }
+        })
 
 
 
@@ -302,6 +340,8 @@ function createInterface() {
             dateTaskInput.value = myProjects[currentIndex].tasks[taskIndex].dueDate
             modalTask.style.display = 'block'
             modalTaskContent.style.display = 'block'
+            submitButton.style.display = 'none'
+            submitButtonTwo.style.display = 'block'
         })
 
 
@@ -309,6 +349,8 @@ function createInterface() {
         console.log(taskIndex)
         taskSpanTitle.textContent = myProjects[currentIndex].tasks[taskIndex].title
         taskSpanDate.textContent = myProjects[currentIndex].tasks[taskIndex].dueDate
+        taskSpanDescription.textContent = myProjects[currentIndex].tasks[taskIndex].description
+        taskSpanPriority.textContent = 'Priority: ' + myProjects[currentIndex].tasks[taskIndex].priority
         console.log(myProjects[currentIndex])
         console.log(myProjects[currentIndex].tasks[taskIndex].title)
         console.log(myProjects[currentIndex].tasks[taskIndex].description)
@@ -322,19 +364,50 @@ function createInterface() {
         taskIcons.appendChild(myExpand)
         taskIcons.appendChild(myEdit)
         taskIcons.appendChild(myTrash)
+        taskBoxExpand.appendChild(taskSpanDescription)
+        taskBoxExpand.appendChild(taskSpanPriority)
+        taskBox.appendChild(taskBoxExpand)
         taskBoxList.appendChild(taskBox)
 
+        taskBoxExpand.style.display = 'none'
 
         checkBox.addEventListener('change', function(){
             if(this.checked) {
                 taskSpanTitle.style.setProperty('text-decoration', 'line-through')
+                taskSpanDate.style.setProperty('text-decoration', 'line-through')
+                taskSpanDescription.style.setProperty('text-decoration', 'line-through')
+                taskSpanPriority.style.setProperty('text-decoration', 'line-through')
             }
             else {
                 taskSpanTitle.style.setProperty('text-decoration', 'none')
+                taskSpanDate.style.setProperty('text-decoration', 'none')
+                taskSpanDescription.style.setProperty('text-decoration', 'none')
+                taskSpanPriority.style.setProperty('text-decoration', 'none')
             }
         })
     }
 
+    submitButtonTwo.addEventListener('click', function(e){
+        const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+        let myTask = myProjects[currentIndex].tasks.findIndex(item => item.id === currentTask)
+        myProjects[currentIndex].tasks[myTask].changeTitle(titleTaskInput.value)
+        myProjects[currentIndex].tasks[myTask].changeDescription(descriptionTaskInput.value)
+        myProjects[currentIndex].tasks[myTask].changeDueDate(dateTaskInput.value)
+        myProjects[currentIndex].tasks[myTask].changePriority(priorityTaskInput.value)
+        let getTaskTitle = document.getElementById(currentTask).querySelector('[data-id="title"]')
+        let getTaskDate = document.getElementById(currentTask).querySelector('[data-id="date"]')
+        let getTaskDescription = document.getElementById(currentTask).querySelector('[data-id="description"]')
+        let getTaskPriority = document.getElementById(currentTask).querySelector('[data-id="priority"]')
+        getTaskTitle.textContent = myProjects[currentIndex].tasks[myTask].title
+        getTaskDate.textContent = myProjects[currentIndex].tasks[myTask].dueDate
+        getTaskDescription.textContent = myProjects[currentIndex].tasks[myTask].description
+        getTaskPriority.textContent = 'Priority: ' + myProjects[currentIndex].tasks[myTask].priority
+        e.preventDefault()
+        modalTask.style.display = 'none'
+        modalTaskContent.style.display = 'none'
+        submitButton.style.display = 'block'
+        submitButtonTwo.style.display = 'none'
+    })
 
     topInterface.appendChild(homeInterface)
     topInterface.appendChild(todayInterface)
@@ -374,10 +447,6 @@ function createInterface() {
     modalTask.appendChild(modalTaskContent)
     rightSide.appendChild(modalTask)
 
-    /*
-    modalTaskClone.appendChild(modalTaskContentClone)
-    rightSide.appendChild(modalTaskClone)
-    */
 
     form.appendChild(titleTask)
     form.appendChild(titleTaskInput)
@@ -392,6 +461,7 @@ function createInterface() {
     form.appendChild(priorityTask)
     form.appendChild(dateTask)
     form.appendChild(submitButton)
+    form.appendChild(submitButtonTwo)
     dateTask.appendChild(dateTaskInput)
     taskDiv.appendChild(closeClone)
     taskDiv.appendChild(form)
