@@ -267,9 +267,14 @@ function createInterface() {
 
         myTrash.addEventListener('click', function() {
             let i = myProjects.findIndex(item => item.id === projectDivArea.id)
-            myProjects.splice(i, 1)
-            projectList.removeChild(projectDiv)
             header.textContent = ''
+            for(let j=0; j < myProjects[i].tasks.length; j++){
+                let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
+                taskBoxList.removeChild(grabTaskBox)
+            }
+            myProjects[i].removeAllTasks()
+            projectList.removeChild(projectDiv)
+            myProjects.splice(i, 1)
         })
 
         let index = myProjects.findIndex(item => item.id === projectDivArea.id)
@@ -598,6 +603,9 @@ class Project {
     }
     removeTask(index) {
         return this.tasks.splice(index, 1)
+    }
+    removeAllTasks(){
+        return this.tasks.splice(0, this.tasks.length)
     }
     getList() {
         return this.tasks
