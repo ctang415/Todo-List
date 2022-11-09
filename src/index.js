@@ -141,6 +141,7 @@ function createInterface() {
     addTaskButton.textContent = ['add task']
 
     allInterface.addEventListener('click', function(){
+        header.textContent = 'All Tasks'
         let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
         for(let x=0; x < childNodes.length; x++)
         childNodes[x].style.display = 'none'
@@ -155,6 +156,7 @@ function createInterface() {
 
 
     weekInterface.addEventListener('click', function(){
+        header.textContent = `This Week's Tasks`
         let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
         for(let x=0; x < childNodes.length; x++){
         childNodes[x].style.display = 'none'
@@ -170,6 +172,7 @@ function createInterface() {
 })
 
     importantInterface.addEventListener('click', function(){
+        header.textContent = 'Important Tasks'
         let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
         for(let x=0; x < childNodes.length; x++){
         childNodes[x].style.display = 'none'
@@ -230,7 +233,15 @@ function createInterface() {
             header.textContent = myProjects[index].title
             header.appendChild(addTaskButton)
             currentIndex = index
-        })
+            let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
+            for(let x=0; x < childNodes.length; x++){
+            childNodes[x].style.display = 'none'
+            }
+                for (let j=0; j < myProjects[index].tasks.length; j++){
+                        let grabTaskBox = document.getElementById(myProjects[index].tasks[j].getTodoId())
+                        grabTaskBox.style.display = 'grid'
+                }
+    })
 
         const projectIcons = document.createElement('div')
         const myTrash = new Image()
@@ -461,6 +472,7 @@ function createInterface() {
 
 
 todayInterface.addEventListener('click', function(){
+    header.textContent = `Today's Tasks`
     let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
     for(let x=0; x < childNodes.length; x++)
     childNodes[x].style.display = 'none'
