@@ -1,4 +1,5 @@
 import './style.css';
+import { differenceInCalendarDays, lightFormat } from 'date-fns';
 import Expand from './expand.png'
 import Edit from './edit.png'
 import Trash from './trash.png'
@@ -51,16 +52,36 @@ function createInterface() {
     taskBoxList.classList.add('stretchTask')
     const submitButtonTwo = document.getElementById('submitButtonTwo')
 
+
+
+  function get7Days() {
+    let date = new Date();
+    date.setDate(date.getDate() + 7);
+    return lightFormat(date, 'yyyy-MM-dd');
+  }
+
+  function getToday() {
+    let date = new Date();
+    return lightFormat(date, 'yyyy-MM-dd');
+  }
+  
+  let today = getToday()
+  let nextWeek = get7Days();
+
     let currentIndex;
     let currentEdit;
     let currentDiv;
 
     inputTitle.id = 'inputid'
     inputTitle.maxLength = 35
-    dateTaskInput.value = new Date().toLocaleDateString('en-CA')
-    let currentDate = new Date().toLocaleDateString('en-CA')
+    dateTaskInput.value = today
+    let currentDate = today
+    
+   
 
 
+
+  
  
     headerText.classList.add('flex')
     projectInterface.classList.add('grid')
@@ -105,9 +126,13 @@ function createInterface() {
 
     headerText.textContent = ['Taskit'];
     allInterface.textContent = ['All']
+    allInterface.setAttribute('style', 'cursor: pointer')
     todayInterface.textContent = ['Today']
+    todayInterface.setAttribute('style', 'cursor: pointer')
     weekInterface.textContent = ['This Week']
+    weekInterface.setAttribute('style', 'cursor: pointer')
     importantInterface.textContent = ['Important']
+    importantInterface.setAttribute('style', 'cursor: pointer')
     project.textContent = ['Projects']
     plusButton.textContent = ["+"]
     modalContent.textContent = ['Add New Project']
@@ -116,23 +141,47 @@ function createInterface() {
     addTaskButton.textContent = ['add task']
 
     allInterface.addEventListener('click', function(){
-        while(taskBoxList.firstChild){
-            taskBoxList.removeChild(taskBoxList.firstChild)
+        let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
+        for(let x=0; x < childNodes.length; x++)
+        childNodes[x].style.display = 'none'
+        for(let i=0; i < myProjects.length; i++){
+            for (let j=0; j < myProjects[i].tasks.length; j++){
+                    let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
+                    grabTaskBox.style.display = 'grid'
+            }
         }
     })
 
 
 
     weekInterface.addEventListener('click', function(){
-        while(taskBoxList.firstChild){
-            taskBoxList.removeChild(taskBoxList.firstChild)
+        let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
+        for(let x=0; x < childNodes.length; x++){
+        childNodes[x].style.display = 'none'
         }
-    })
+        for(let i=0; i < myProjects.length; i++){
+            for (let j=0; j < myProjects[i].tasks.length; j++){
+                if(myProjects[i].tasks[j].dueDate === currentDate || ((nextWeek.split("-")[2]) - (myProjects[i].tasks[j].dueDate).split("-")[2] < 7) && (nextWeek.split("-")[2]) - (myProjects[i].tasks[j].dueDate).split("-")[2] >= 0) {
+                    let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
+                    grabTaskBox.style.display = 'grid'
+            }
+        }
+    }
+})
 
     importantInterface.addEventListener('click', function(){
-        while(taskBoxList.firstChild){
-            taskBoxList.removeChild(taskBoxList.firstChild)
+        let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
+        for(let x=0; x < childNodes.length; x++){
+        childNodes[x].style.display = 'none'
         }
+        for(let i=0; i < myProjects.length; i++){
+            for (let j=0; j < myProjects[i].tasks.length; j++){
+                if(myProjects[i].tasks[j].priority === "High"){
+                    let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
+                    grabTaskBox.style.display = 'grid'
+            }
+        }
+    }
     })
 
     plusButton.addEventListener('click', function() {
@@ -241,7 +290,7 @@ function createInterface() {
     addTaskButton.addEventListener('click', function() {
         titleTaskInput.value = ''
         descriptionTaskInput.value = ''
-        dateTaskInput.value = new Date().toLocaleDateString('en-CA')
+        dateTaskInput.value = today
         submitButtonTwo.style.display = 'none'
         modalTask.style.display = 'block'
         modalTaskContent.style.display = 'block'
@@ -282,7 +331,7 @@ function createInterface() {
         e.preventDefault()
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
-        dateTaskInput.value = new Date().toLocaleDateString('en-CA')
+        dateTaskInput.value = today
     })
     let currentTask;
 
@@ -409,22 +458,7 @@ function createInterface() {
         })
     }
 
-/*
-    todayInterface.addEventListener('click', function(){
-        while(taskBoxList.firstChild){
-            taskBoxList.removeChild(taskBoxList.firstChild)
-        }
-        for(let i=0; i < myProjects.length; i++){
-            for (let j=0; j < myProjects[i].tasks.length; j++){
-                if(myProjects[i].tasks[j].dueDate === currentDate){
-                    let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
-                    console.log(grabTaskBox)
-                    taskBoxList.appendChild(grabTaskBox)
-                }
-            }
-        }
-    })
-*/
+
 
 todayInterface.addEventListener('click', function(){
     let childNodes = taskBoxList.querySelectorAll('[data-id="myTaskBox"]')
