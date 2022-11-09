@@ -120,7 +120,7 @@ li {
     padding: 20px;
     border: 1px solid #888;
     width: 40%;
-    height: 40%;
+    height: 45%;
     font-size: 2.5vw;
 
   }
@@ -278,7 +278,8 @@ li {
     grid-column: 2;
     font-family: "Bebas Neue";
     overflow:scroll;
-    height: 60px;
+    display: flex;
+    height: 80px;
     padding-top: 5px;
 }
 
