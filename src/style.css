@@ -9,7 +9,7 @@ html {
 .flex {
     display: flex;
     font-family: 'Bebas Neue';
-    font-size: 6vw;
+    font-size: 5.5vw;
     color: teal;
     letter-spacing: 10px;
     justify-content: center;
@@ -304,4 +304,8 @@ li {
 
 .checkBox {
     height: 1.5vw;
+}
+
+input[type='radio'] { 
+    transform: scale(1.2); 
 }
