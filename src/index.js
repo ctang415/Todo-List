@@ -365,6 +365,7 @@ function createInterface() {
         taskId = newTodo.getTodoId()
         myProjects[currentIndex].addTask(newTodo)
         createTasks();
+        localStorage.setItem('projects', JSON.stringify(myProjects))
         form.reset()
         e.preventDefault()
         modalTask.style.display = 'none'
@@ -434,6 +435,7 @@ function createInterface() {
             let findTask = myProjects[currentIndex].tasks.findIndex(item => item.id === taskBox.id)
             myProjects[currentIndex].removeTask(findTask)
             taskBoxList.removeChild(taskBox)
+            localStorage.setItem('projects', JSON.stringify(myProjects))
             console.log(myProjects)
         })
 
@@ -504,6 +506,7 @@ function createInterface() {
         getTaskDate.textContent = myProjects[currentIndex].tasks[myTask].dueDate
         getTaskDescription.textContent = myProjects[currentIndex].tasks[myTask].description
         getTaskPriority.textContent = 'Priority: ' + myProjects[currentIndex].tasks[myTask].priority
+        localStorage.setItem('projects', JSON.stringify(myProjects))
         e.preventDefault()
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
