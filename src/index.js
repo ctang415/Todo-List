@@ -296,6 +296,7 @@ function createInterface() {
             myProjects[i].removeAllTasks()
             projectList.removeChild(projectDiv)
             myProjects.splice(i, 1)
+            localStorage.setItem('projects', JSON.stringify(myProjects))
         })
 
         let index = myProjects.findIndex(item => item.id === projectDivArea.id)
@@ -314,8 +315,8 @@ function createInterface() {
         let value = myProjects.findIndex(item => item.id === currentDiv)
         myProjects[value].changeProjectTitle(editInput.value)
 
+        localStorage.setItem('projects', JSON.stringify(myProjects))
 
-        
         console.log(value)
         header.textContent = myProjects[value].title
         header.classList.add('header')
@@ -652,7 +653,6 @@ function storeProject() {
 // Creates the array in local storage
 if(!localStorage.getItem("projects")){
     localStorage.setItem('projects', JSON.stringify([]))
-
 }
 
 // Selects the array 
