@@ -60,6 +60,7 @@ function createInterface() {
     let currentDiv;
 
 
+
   function get7Days() {
     let date = new Date();
     date.setDate(date.getDate() + 7);
@@ -255,6 +256,7 @@ function createInterface() {
                         let grabTaskBox = document.getElementById(myProjects[index].tasks[j].getTodoId())
                         grabTaskBox.style.display = 'grid'
                 }
+               console.log(index) 
     })
 
         const projectIcons = document.createElement('div')
@@ -266,15 +268,21 @@ function createInterface() {
         myEdit.src = Edit
         myEdit.setAttribute('id', currentProject)
         currentEdit = myProjects.findIndex(item => item.id === projectDivArea.id)
+        console.log(currentEdit)
+        console.log(projectDivArea.id)
 
 
         myEdit.addEventListener('click', function(){
             currentDiv = this.id
+            console.log(currentDiv)
             modalClone.style.display = 'block'
             modalContentClone.style.display = 'block'
             let value = myProjects.findIndex(item => item.id === projectDivArea.id)
+            console.log(value)
             editInput.value = myProjects[value].title
+            console.log(editInput.value)
             editInput.maxLength = 35;
+            console.log(myProjects)
         })
 
 
@@ -303,13 +311,18 @@ function createInterface() {
     }
 
     addButtonClone.addEventListener('click', function(){
-        myProjects[currentEdit].changeProjectTitle(editInput.value)
-        header.textContent = myProjects[currentEdit].title
+        let value = myProjects.findIndex(item => item.id === currentDiv)
+        myProjects[value].changeProjectTitle(editInput.value)
+
+
+        
+        console.log(value)
+        header.textContent = myProjects[value].title
         header.classList.add('header')
         header.appendChild(addTaskButton)
         let editDiv = currentDiv
         let divId = document.getElementById(editDiv)
-        divId.textContent = myProjects[currentEdit].title
+        divId.textContent = myProjects[value].title
         modalClone.style.display = 'none'
         modalContentClone.style.display = 'none'
     })
@@ -621,6 +634,13 @@ class Todo {
 }
 
 
+/*
+        let projectStorage = JSON.parse(localStorage.getItem('projects') || "[]")
+        let theProject = JSON.parse(localStorage.getItem('projects', projectStorage[0]))
+        let storageIndex = theProject.findIndex(item => item.id === currentDiv)
+        localStorage.setItem('projects', JSON.stringify(myProjects))
+*/
+
 function storeProject() {
     let newProject = new Project(inputid.value)
     myProjects.push(newProject)
@@ -638,8 +658,10 @@ if(!localStorage.getItem("projects")){
 // Selects the array 
 let projectStorage = JSON.parse(localStorage.getItem('projects') || "[]")
 
-
-const renderLocalStorage = (() => {
+// Pushes local storage objects into myProjects array
+function renderLocalStorage(){
     let theProject = JSON.parse(localStorage.getItem('projects', projectStorage[0]))
     theProject.forEach(element => myProjects.push(element))
-})()
+    localStorage.clear()
+}
+renderLocalStorage();
