@@ -7,6 +7,57 @@ import Trash from './trash.png'
 let myProjects = [];
 let currentProject;
 
+
+class Project {
+    constructor(title) {
+        this.title = title;
+        this.tasks = []
+        this.id = "id" + Math.random().toString(16).slice(2)
+    }
+    addTask(task) {
+        return this.tasks.push(task)
+    }
+    removeTask(index) {
+        return this.tasks.splice(index, 1)
+    }
+    removeAllTasks(){
+        return this.tasks.splice(0, this.tasks.length)
+    }
+    getId(){
+        return this.id
+    }
+    changeProjectTitle(newTitle){
+        return this.title = newTitle
+    }
+}
+
+
+class Todo {
+    constructor(title, description, priority, dueDate){
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.dueDate = dueDate;
+        this.id = "id" + Math.random().toString(16).slice(2)
+
+    }
+    changeTitle(newTitle) {
+        return this.title = newTitle
+    }
+    changeDescription(newDescription) {
+        return this.description = newDescription
+    }
+    changeDueDate(newDueDate) {
+        return this.dueDate = newDueDate
+    }
+    changePriority(newPriority){
+        return this.priority = newPriority
+    }
+    getTodoId() {
+        return this.id
+    }
+}
+
 function createInterface() {
     const box = document.createElement('div')
     const titleText = document.createElement('div')
@@ -224,7 +275,6 @@ function createInterface() {
             inputid.value = ''
         }
         else if (inputid.value != '') {
-        console.log(myProjects)
         storeProject()
         displayProject();
         modal.style.display = 'none'
@@ -256,7 +306,6 @@ function createInterface() {
                         let grabTaskBox = document.getElementById(myProjects[index].tasks[j].getTodoId())
                         grabTaskBox.style.display = 'grid'
                 }
-               console.log(index) 
     })
 
         const projectIcons = document.createElement('div')
@@ -268,21 +317,17 @@ function createInterface() {
         myEdit.src = Edit
         myEdit.setAttribute('id', currentProject)
         currentEdit = myProjects.findIndex(item => item.id === projectDivArea.id)
-        console.log(currentEdit)
-        console.log(projectDivArea.id)
+
 
 
         myEdit.addEventListener('click', function(){
             currentDiv = this.id
-            console.log(currentDiv)
             modalClone.style.display = 'block'
             modalContentClone.style.display = 'block'
             let value = myProjects.findIndex(item => item.id === projectDivArea.id)
-            console.log(value)
             editInput.value = myProjects[value].title
-            console.log(editInput.value)
             editInput.maxLength = 35;
-            console.log(myProjects)
+
         })
 
 
@@ -308,19 +353,13 @@ function createInterface() {
         projectDiv.appendChild(projectDivArea)
         projectDiv.appendChild(projectIcons)
         projectList.appendChild(projectDiv)
-        console.log(myProjects)
+  
     }
 
     addButtonClone.addEventListener('click', function(){
         let value = myProjects.findIndex(item => item.id === currentDiv)
         myProjects[value].changeProjectTitle(editInput.value)
-
         localStorage.setItem('projects', JSON.stringify(myProjects))
-
-        console.log(value)
-        header.textContent = myProjects[value].title
-        header.classList.add('header')
-        header.appendChild(addTaskButton)
         let editDiv = currentDiv
         let divId = document.getElementById(editDiv)
         divId.textContent = myProjects[value].title
@@ -413,7 +452,6 @@ function createInterface() {
         taskSpanPriority.setAttribute('data-id', 'priority')
         taskSpanPriority.classList.add('taskBoxPriority')
         taskBox.setAttribute('data-id', 'myTaskBox')
-    
 
 
         taskBox.addEventListener('click', function(){
@@ -436,7 +474,6 @@ function createInterface() {
             myProjects[currentIndex].removeTask(findTask)
             taskBoxList.removeChild(taskBox)
             localStorage.setItem('projects', JSON.stringify(myProjects))
-            console.log(myProjects)
         })
 
 
@@ -514,6 +551,154 @@ function createInterface() {
         submitButtonTwo.style.display = 'none'
     })
 
+function storeProject() {
+    let newProject = new Project(inputid.value)
+    myProjects.push(newProject)
+    currentProject = newProject.getId();
+    projectStorage.push(newProject)
+    localStorage.setItem('projects', JSON.stringify(projectStorage))
+    console.log(myProjects)
+}
+
+
+
+// Creates the array in local storage
+if(!localStorage.getItem("projects")){
+    localStorage.setItem('projects', JSON.stringify([]))
+}
+
+// Selects the array 
+let projectStorage = JSON.parse(localStorage.getItem('projects') || "[]")
+
+let theProject = JSON.parse(localStorage.getItem('projects', projectStorage[0]))
+function renderLocalStorage(){
+    for (let i = 0; i < theProject.length; i++) {
+        let newProject = new Project(theProject[i].title)
+        currentProject = newProject.getId();
+        myProjects.push(newProject)
+        displayProject();
+        header.textContent = 'All Tasks'
+        header.classList.add('header')
+    for(let j=0; j < theProject[i].tasks.length; j++) {
+        let newTodo = new Todo(theProject[i].tasks[j].title, theProject[i].tasks[j].description, theProject[i].tasks[j].priority, theProject[i].tasks[j].dueDate)
+        taskId = newTodo.getTodoId()
+        myProjects[i].addTask(newTodo)
+        const taskBox = document.createElement('div')
+        const taskBoxArea = document.createElement('div')
+        const taskSpanTitle = document.createElement('span')
+        const taskSpanDate = document.createElement('span')
+        const checkBox = document.createElement('input')
+        const taskBoxExpand = document.createElement('div')
+        const taskSpanDescription = document.createElement('div')
+        const taskSpanPriority = document.createElement('div')
+        checkBox.setAttribute('type', 'checkbox')
+        checkBox.classList.add('checkBox')
+        taskBox.classList.add('taskBoxesGrid')
+        taskBoxArea.classList.add('taskArea')
+        const taskIcons = document.createElement('div')
+        const myTrash = new Image()
+        const myEdit = new Image()
+        const myExpand = new Image()
+        taskIcons.classList.add('taskIcons')
+        myExpand.src = Expand
+        myEdit.src = Edit
+        myTrash.src = Trash
+        myExpand.setAttribute('style', 'height: 2.8vw')
+        myEdit.setAttribute('style', 'height: 2.6vw')
+        myTrash.setAttribute('style', 'height: 2.9vw')
+        myExpand.classList.add('cursor')
+        myEdit.classList.add('cursor')
+        myTrash.classList.add('cursor')
+        taskBox.setAttribute('id', taskId)
+        taskSpanTitle.setAttribute('data-id', 'title')
+        taskSpanDate.setAttribute('data-id', 'date')
+        taskBoxExpand.classList.add('taskBoxExpand')
+        taskSpanDescription.classList.add('taskBoxDescription')
+        taskSpanDescription.setAttribute('data-id', 'description')
+        taskSpanPriority.setAttribute('data-id', 'priority')
+        taskSpanPriority.classList.add('taskBoxPriority')
+        taskBox.setAttribute('data-id', 'myTaskBox')
+
+
+        taskBox.addEventListener('click', function(){
+            currentTask = this.id
+        })
+
+        myExpand.addEventListener('click', function(){
+            if(taskBoxExpand.style.display === 'none') {
+            taskBoxExpand.style.display = 'block'
+            }
+            else {
+                taskBoxExpand.style.display = 'none'
+            }
+        })
+
+
+
+        myTrash.addEventListener('click', function() {
+            let findTask = myProjects[i].tasks.findIndex(item => item.id === taskBox.id)
+            myProjects[i].removeTask(findTask)
+            taskBoxList.removeChild(taskBox)
+            localStorage.setItem('projects', JSON.stringify(myProjects))
+        })
+
+
+        myEdit.addEventListener('click', function(){
+            const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+            titleTaskInput.value = myProjects[i].tasks[j].title
+            descriptionTaskInput.value = myProjects[i].tasks[j].description
+            priorityTaskInput.value = myProjects[i].tasks[j].priority
+            dateTaskInput.value = myProjects[i].tasks[j].dueDate
+            modalTask.style.display = 'block'
+            modalTaskContent.style.display = 'block'
+            submitButton.style.display = 'none'
+            submitButtonTwo.style.display = 'block'
+        })
+
+        taskSpanTitle.textContent = myProjects[i].tasks[j].title
+        taskSpanDate.textContent = myProjects[i].tasks[j].dueDate
+        taskSpanDescription.textContent = myProjects[i].tasks[j].description
+        taskSpanPriority.textContent = 'Priority: ' + myProjects[i].tasks[j].priority
+        taskBox.appendChild(checkBox)
+        taskBoxArea.appendChild(taskSpanTitle)
+        taskBoxArea.appendChild(taskSpanDate)
+        taskBox.appendChild(taskBoxArea)
+        taskBox.appendChild(taskIcons)
+        taskIcons.appendChild(myExpand)
+        taskIcons.appendChild(myEdit)
+        taskIcons.appendChild(myTrash)
+        taskBoxExpand.appendChild(taskSpanDescription)
+        taskBoxExpand.appendChild(taskSpanPriority)
+        taskBox.appendChild(taskBoxExpand)
+        taskBoxList.appendChild(taskBox)
+
+  
+        taskBoxExpand.style.display = 'none'
+
+        checkBox.addEventListener('change', function(){
+            if(this.checked) {
+                taskSpanTitle.style.setProperty('text-decoration', 'line-through')
+                taskSpanDate.style.setProperty('text-decoration', 'line-through')
+                taskSpanDescription.style.setProperty('text-decoration', 'line-through')
+                taskSpanPriority.style.setProperty('text-decoration', 'line-through')
+            }
+            else {
+                taskSpanTitle.style.setProperty('text-decoration', 'none')
+                taskSpanDate.style.setProperty('text-decoration', 'none')
+                taskSpanDescription.style.setProperty('text-decoration', 'none')
+                taskSpanPriority.style.setProperty('text-decoration', 'none')
+            }
+        })
+        
+        }
+    }
+}
+renderLocalStorage()
+console.log(myProjects)
+
+
+
+
     topInterface.appendChild(allInterface)
     topInterface.appendChild(todayInterface)
     topInterface.appendChild(weekInterface)
@@ -576,95 +761,8 @@ function createInterface() {
     rightSide.appendChild(taskBoxList)
     box.appendChild(titleText)
     box.appendChild(projectInterface)
-    console.log(myProjects)
     return box;
 }
 
 document.getElementById('container').appendChild(createInterface());
 
-
-
-
-
-
-class Project {
-    constructor(title) {
-        this.title = title;
-        this.tasks = []
-        this.id = "id" + Math.random().toString(16).slice(2)
-    }
-    addTask(task) {
-        return this.tasks.push(task)
-    }
-    removeTask(index) {
-        return this.tasks.splice(index, 1)
-    }
-    removeAllTasks(){
-        return this.tasks.splice(0, this.tasks.length)
-    }
-    getId(){
-        return this.id
-    }
-    changeProjectTitle(newTitle){
-        return this.title = newTitle
-    }
-}
-
-
-class Todo {
-    constructor(title, description, priority, dueDate){
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.dueDate = dueDate;
-        this.id = "id" + Math.random().toString(16).slice(2)
-
-    }
-    changeTitle(newTitle) {
-        return this.title = newTitle
-    }
-    changeDescription(newDescription) {
-        return this.description = newDescription
-    }
-    changeDueDate(newDueDate) {
-        return this.dueDate = newDueDate
-    }
-    changePriority(newPriority){
-        return this.priority = newPriority
-    }
-    getTodoId() {
-        return this.id
-    }
-}
-
-
-/*
-        let projectStorage = JSON.parse(localStorage.getItem('projects') || "[]")
-        let theProject = JSON.parse(localStorage.getItem('projects', projectStorage[0]))
-        let storageIndex = theProject.findIndex(item => item.id === currentDiv)
-        localStorage.setItem('projects', JSON.stringify(myProjects))
-*/
-
-function storeProject() {
-    let newProject = new Project(inputid.value)
-    myProjects.push(newProject)
-    currentProject = newProject.getId();
-            projectStorage.push(newProject)
-            localStorage.setItem('projects', JSON.stringify(projectStorage))
-}
-
-// Creates the array in local storage
-if(!localStorage.getItem("projects")){
-    localStorage.setItem('projects', JSON.stringify([]))
-}
-
-// Selects the array 
-let projectStorage = JSON.parse(localStorage.getItem('projects') || "[]")
-
-// Pushes local storage objects into myProjects array
-function renderLocalStorage(){
-    let theProject = JSON.parse(localStorage.getItem('projects', projectStorage[0]))
-    theProject.forEach(element => myProjects.push(element))
-    localStorage.clear()
-}
-renderLocalStorage();
