@@ -380,6 +380,8 @@ function createInterface() {
         submitButtonTwo.style.display = 'none'
         modalTask.style.display = 'block'
         modalTaskContent.style.display = 'block'
+        document.getElementById("low").checked = true
+
     })
 
     let closeClone = closeButton.cloneNode(true)
@@ -483,10 +485,20 @@ function createInterface() {
 
 
         myEdit.addEventListener('click', function(){
-            const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+            if(myProjects[currentIndex].tasks[taskIndex].priority === "Medium") {
+                document.getElementById("medium").checked = true
+  
+              }
+              else if (myProjects[currentIndex].tasks[taskIndex].priority === "High") {
+                  document.getElementById("high").checked = true
+              }
+              else if (myProjects[currentIndex].tasks[taskIndex].priority === "Low") {
+                document.getElementById("low").checked = true
+              }
+         
             titleTaskInput.value = myProjects[currentIndex].tasks[taskIndex].title
             descriptionTaskInput.value = myProjects[currentIndex].tasks[taskIndex].description
-            priorityTaskInput.value = myProjects[currentIndex].tasks[taskIndex].priority
+        
             dateTaskInput.value = myProjects[currentIndex].tasks[taskIndex].dueDate
             modalTask.style.display = 'block'
             modalTaskContent.style.display = 'block'
@@ -652,10 +664,20 @@ function renderLocalStorage(){
 
 
         myEdit.addEventListener('click', function(){
-            const priorityTaskInput = document.querySelector('input[name="priority"]:checked')
+            if(myProjects[i].tasks[j].priority === "Medium") {
+                document.getElementById("medium").checked = true
+  
+              }
+              else if (myProjects[i].tasks[j].priority === "High") {
+                  document.getElementById("high").checked = true
+              }
+              else if (myProjects[i].tasks[j].priority === "Low") {
+                document.getElementById("low").checked = true
+              }
+         
             titleTaskInput.value = myProjects[i].tasks[j].title
             descriptionTaskInput.value = myProjects[i].tasks[j].description
-            priorityTaskInput.value = myProjects[i].tasks[j].priority
+            
             dateTaskInput.value = myProjects[i].tasks[j].dueDate
             modalTask.style.display = 'block'
             modalTaskContent.style.display = 'block'
@@ -719,6 +741,17 @@ function renderLocalStorage(){
                 taskSpanDate.style.setProperty('text-decoration', 'none')
                 taskSpanDescription.style.setProperty('text-decoration', 'none')
                 taskSpanPriority.style.setProperty('text-decoration', 'none')
+            }
+
+            if(myProjects[i].tasks[j].priority === "Medium") {
+              document.getElementById("medium").checked = true
+
+            }
+            else if (myProjects[i].tasks[j].priority === "High") {
+                document.getElementById("high").checked = true
+            }
+            else {
+                document.getElementById("low").checked = true
             }
 
 
