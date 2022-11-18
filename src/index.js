@@ -4,8 +4,6 @@ import Expand from './expand.png'
 import Edit from './edit.png'
 import Trash from './trash.png'
 
-let myProjects = [];
-let currentProject;
 
 
 class Project {
@@ -64,6 +62,8 @@ class Todo {
 }
 
 function createInterface() {
+    let myProjects = [];
+    let currentProject;
     const box = document.createElement('div')
     const titleText = document.createElement('div')
     const projectInterface = document.createElement('div')
@@ -338,7 +338,9 @@ function createInterface() {
 
         myTrash.addEventListener('click', function() {
             let i = myProjects.findIndex(item => item.id === projectDivArea.id)
-            header.textContent = ''
+            if (myProjects.length === 1 || myProjects[currentIndex] === myProjects[i] ) {
+                header.textContent = ''
+            }
             for(let j=0; j < myProjects[i].tasks.length; j++){
                 let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
                 taskBoxList.removeChild(grabTaskBox)
