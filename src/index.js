@@ -112,7 +112,6 @@ function createInterface() {
     const editInputDiv = document.createElement('div')
 
     let currentIndex;
-    let currentEdit;
     let currentDiv;
 
 
@@ -321,7 +320,7 @@ function createInterface() {
         myTrash.src = Trash
         myEdit.src = Edit
         myEdit.setAttribute('id', currentProject)
-        currentEdit = myProjects.findIndex(item => item.id === projectDivArea.id)
+    
 
 
 
@@ -364,7 +363,6 @@ function createInterface() {
     }
 
     addButtonClone.addEventListener('click', function(){
-
         let value = myProjects.findIndex(item => item.id === currentDiv)
         myProjects[value].changeProjectTitle(editInput.value)
         localStorage.setItem('projects', JSON.stringify(myProjects))
@@ -416,8 +414,8 @@ function createInterface() {
         let newTodo = new Todo(titleTaskInput.value, descriptionTaskInput.value, priorityTaskInput.value, dateTaskInput.value)
         taskId = newTodo.getTodoId()
         myProjects[currentIndex].addTask(newTodo)
-        createTasks();
         localStorage.setItem('projects', JSON.stringify(myProjects))
+        createTasks();
         form.reset()
         e.preventDefault()
         modalTask.style.display = 'none'
@@ -485,8 +483,8 @@ function createInterface() {
         myTrash.addEventListener('click', function() {
             let findTask = myProjects[currentIndex].tasks.findIndex(item => item.id === taskBox.id)
             myProjects[currentIndex].removeTask(findTask)
-            taskBoxList.removeChild(taskBox)
             localStorage.setItem('projects', JSON.stringify(myProjects))
+            taskBoxList.removeChild(taskBox)
         })
 
 
@@ -504,7 +502,6 @@ function createInterface() {
          
             titleTaskInput.value = myProjects[currentIndex].tasks[taskIndex].title
             descriptionTaskInput.value = myProjects[currentIndex].tasks[taskIndex].description
-        
             dateTaskInput.value = myProjects[currentIndex].tasks[taskIndex].dueDate
             modalTask.style.display = 'block'
             modalTaskContent.style.display = 'block'
@@ -563,6 +560,7 @@ function createInterface() {
         myProjects[currentIndex].tasks[myTask].changeDescription(descriptionTaskInput.value)
         myProjects[currentIndex].tasks[myTask].changeDueDate(dateTaskInput.value)
         myProjects[currentIndex].tasks[myTask].changePriority(priorityTaskInput.value)
+        localStorage.setItem('projects', JSON.stringify(myProjects))
         let getTaskTitle = document.getElementById(currentTask).querySelector('[data-id="title"]')
         let getTaskDate = document.getElementById(currentTask).querySelector('[data-id="date"]')
         let getTaskDescription = document.getElementById(currentTask).querySelector('[data-id="description"]')
@@ -571,7 +569,6 @@ function createInterface() {
         getTaskDate.textContent = myProjects[currentIndex].tasks[myTask].dueDate
         getTaskDescription.textContent = myProjects[currentIndex].tasks[myTask].description
         getTaskPriority.textContent = 'Priority: ' + myProjects[currentIndex].tasks[myTask].priority
-        localStorage.setItem('projects', JSON.stringify(myProjects))
         e.preventDefault()
         modalTask.style.display = 'none'
         modalTaskContent.style.display = 'none'
@@ -587,7 +584,6 @@ function storeProject() {
     localStorage.setItem('projects', JSON.stringify(projectStorage))
     console.log(myProjects)
 }
-
 
 
 // Creates the array in local storage
@@ -683,7 +679,6 @@ function renderLocalStorage(){
          
             titleTaskInput.value = myProjects[i].tasks[j].title
             descriptionTaskInput.value = myProjects[i].tasks[j].description
-            
             dateTaskInput.value = myProjects[i].tasks[j].dueDate
             modalTask.style.display = 'block'
             modalTaskContent.style.display = 'block'
