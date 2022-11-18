@@ -33,12 +33,14 @@ class Project {
 
 
 class Todo {
-    constructor(title, description, priority, dueDate){
+    constructor(title, description, priority, dueDate, status){
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.dueDate = dueDate;
+        this.status = status
         this.id = "id" + Math.random().toString(16).slice(2)
+ 
 
     }
     changeTitle(newTitle) {
@@ -55,6 +57,9 @@ class Todo {
     }
     getTodoId() {
         return this.id
+    }
+    toggleCheck(status) {
+        return this.status
     }
 }
 
@@ -509,19 +514,24 @@ function createInterface() {
         taskBoxList.appendChild(taskBox)
 
         taskBoxExpand.style.display = 'none'
+        myProjects[currentIndex].tasks[taskIndex].status = "unchecked"
 
         checkBox.addEventListener('change', function(){
             if(this.checked) {
+                myProjects[currentIndex].tasks[taskIndex].status = "checked"
                 taskSpanTitle.style.setProperty('text-decoration', 'line-through')
                 taskSpanDate.style.setProperty('text-decoration', 'line-through')
                 taskSpanDescription.style.setProperty('text-decoration', 'line-through')
                 taskSpanPriority.style.setProperty('text-decoration', 'line-through')
+                localStorage.setItem('projects', JSON.stringify(myProjects))
             }
             else {
+                myProjects[currentIndex].tasks[taskIndex].status = "unchecked"
                 taskSpanTitle.style.setProperty('text-decoration', 'none')
                 taskSpanDate.style.setProperty('text-decoration', 'none')
                 taskSpanDescription.style.setProperty('text-decoration', 'none')
                 taskSpanPriority.style.setProperty('text-decoration', 'none')
+                localStorage.setItem('projects', JSON.stringify(myProjects))
             }
         })
     }
@@ -577,10 +587,8 @@ function renderLocalStorage(){
         currentProject = newProject.getId();
         myProjects.push(newProject)
         displayProject();
-        header.textContent = 'All Tasks'
-        header.classList.add('header')
     for(let j=0; j < theProject[i].tasks.length; j++) {
-        let newTodo = new Todo(theProject[i].tasks[j].title, theProject[i].tasks[j].description, theProject[i].tasks[j].priority, theProject[i].tasks[j].dueDate)
+        let newTodo = new Todo(theProject[i].tasks[j].title, theProject[i].tasks[j].description, theProject[i].tasks[j].priority, theProject[i].tasks[j].dueDate, theProject[i].tasks[j].status)
         taskId = newTodo.getTodoId()
         myProjects[i].addTask(newTodo)
         const taskBox = document.createElement('div')
@@ -591,7 +599,7 @@ function renderLocalStorage(){
         const taskBoxExpand = document.createElement('div')
         const taskSpanDescription = document.createElement('div')
         const taskSpanPriority = document.createElement('div')
-        checkBox.setAttribute('type', 'checkbox')
+        checkBox.type = 'checkbox'
         checkBox.classList.add('checkBox')
         taskBox.classList.add('taskBoxesGrid')
         taskBoxArea.classList.add('taskArea')
@@ -655,6 +663,26 @@ function renderLocalStorage(){
             submitButtonTwo.style.display = 'block'
         })
 
+        checkBox.addEventListener('change', function(){
+            if(this.checked) {
+                myProjects[i].tasks[j].status = "checked"
+                taskSpanTitle.style.setProperty('text-decoration', 'line-through')
+                taskSpanDate.style.setProperty('text-decoration', 'line-through')
+                taskSpanDescription.style.setProperty('text-decoration', 'line-through')
+                taskSpanPriority.style.setProperty('text-decoration', 'line-through')
+                localStorage.setItem('projects', JSON.stringify(myProjects))
+
+            }
+            else {
+                myProjects[i].tasks[j].status = "unchecked"
+                taskSpanTitle.style.setProperty('text-decoration', 'none')
+                taskSpanDate.style.setProperty('text-decoration', 'none')
+                taskSpanDescription.style.setProperty('text-decoration', 'none')
+                taskSpanPriority.style.setProperty('text-decoration', 'none')
+                localStorage.setItem('projects', JSON.stringify(myProjects))
+            }
+        })
+
         taskSpanTitle.textContent = myProjects[i].tasks[j].title
         taskSpanDate.textContent = myProjects[i].tasks[j].dueDate
         taskSpanDescription.textContent = myProjects[i].tasks[j].description
@@ -672,23 +700,28 @@ function renderLocalStorage(){
         taskBox.appendChild(taskBoxExpand)
         taskBoxList.appendChild(taskBox)
 
-  
+        taskBox.style.display = 'none'
         taskBoxExpand.style.display = 'none'
 
-        checkBox.addEventListener('change', function(){
-            if(this.checked) {
+
+
+            if(myProjects[i].tasks[j].status === "checked") {
+                checkBox.setAttribute('checked', true)
                 taskSpanTitle.style.setProperty('text-decoration', 'line-through')
                 taskSpanDate.style.setProperty('text-decoration', 'line-through')
                 taskSpanDescription.style.setProperty('text-decoration', 'line-through')
                 taskSpanPriority.style.setProperty('text-decoration', 'line-through')
+  
             }
-            else {
+            else if (myProjects[i].tasks[j].status === "unchecked"){
+                checkBox.removeAttribute('checked')
                 taskSpanTitle.style.setProperty('text-decoration', 'none')
                 taskSpanDate.style.setProperty('text-decoration', 'none')
                 taskSpanDescription.style.setProperty('text-decoration', 'none')
                 taskSpanPriority.style.setProperty('text-decoration', 'none')
             }
-        })
+
+
         
         }
     }
