@@ -364,12 +364,16 @@ function createInterface() {
     }
 
     addButtonClone.addEventListener('click', function(){
+
         let value = myProjects.findIndex(item => item.id === currentDiv)
         myProjects[value].changeProjectTitle(editInput.value)
         localStorage.setItem('projects', JSON.stringify(myProjects))
         let editDiv = currentDiv
         let divId = document.getElementById(editDiv)
         divId.textContent = myProjects[value].title
+        if(myProjects[value] === myProjects[currentIndex]) {
+            header.textContent = myProjects[value].title
+        }
         modalClone.style.display = 'none'
         modalContentClone.style.display = 'none'
     })
