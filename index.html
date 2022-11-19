@@ -4,10 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=https://ctang415.github.io/Todo-List/dist/index.html">
-    <title>Document</title>
+    <title>Todo List</title>
 </head>
 <body>
-    
+    <div id="container">
+        <form id="form">
+            <div class="form">
+                <label id="labelTitle">Title: </label>
+                <input type="text" id="title" maxlength="45">
+            </div>
+            <div class="form">
+                <label id="labelNotes">Notes: </label>
+                <input type="text" id="description">
+            </div>
+            <div class="form">
+                <label id="labelPriority">Priority: </label>
+                <input type="radio" name="priority" value="Low" id="low" checked>
+                <label id="lowLabel"> Low </label>
+                <input type="radio" name="priority" value="Medium" id="medium">
+                <label id="mediumLabel"> Medium </label>
+                <input type="radio" name="priority" value="High" id="high">
+                <label id="highLabel"> High </label>
+            </div>
+            <div class="form">
+                <label id="labelDate">Date Due: </label>
+                <input type="date" id="date">
+            </div>
+            <button type="submit" id="submitButton">Submit</button>
+            <button type="submit" id="submitButtonTwo">Submit</button>
+        </form>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
