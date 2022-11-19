@@ -579,8 +579,7 @@ function storeProject() {
     let newProject = new Project(inputid.value)
     myProjects.push(newProject)
     currentProject = newProject.getId();
-    projectStorage.push(newProject)
-    localStorage.setItem('projects', JSON.stringify(projectStorage))
+    localStorage.setItem('projects', JSON.stringify(myProjects))
     console.log(myProjects)
 }
 
