@@ -80,7 +80,6 @@ function createInterface() {
     const plusButton = document.createElement('div')
     const header = document.createElement('div')
     const addTaskButton = document.createElement('button')
-    const tasks = document.createElement('div')
     const bottomInterface = document.createElement('div')
     const modal = document.createElement('div')
     const modalContent = document.createElement('div')
@@ -114,7 +113,7 @@ function createInterface() {
     let currentIndex;
     let currentDiv;
 
-
+  
 
   function get7Days() {
     let date = new Date();
@@ -138,7 +137,7 @@ function createInterface() {
     dateTaskInput.value = today
     let currentDate = today
     
-
+    box.classList.add('boxClass')
     titleText.classList.add('flex')
     projectInterface.classList.add('grid')
     topInterface.classList.add('top')
@@ -146,7 +145,6 @@ function createInterface() {
     plusButton.classList.add('projectplus')
     leftSide.classList.add('project')
     rightSide.classList.add('rightSide')
-    tasks.classList.add('tasks')
     modal.classList.add('modal')
     modalContent.classList.add('modal-content')
     input.classList.add('buttons')
@@ -340,6 +338,7 @@ function createInterface() {
             if (myProjects.length === 1 || myProjects[currentIndex] === myProjects[i] ) {
                 header.textContent = ''
             }
+
             for(let j=0; j < myProjects[i].tasks.length; j++){
                 let grabTaskBox = document.getElementById(myProjects[i].tasks[j].getTodoId())
                 taskBoxList.removeChild(grabTaskBox)
@@ -660,8 +659,8 @@ function renderLocalStorage(){
         myTrash.addEventListener('click', function() {
             let findTask = myProjects[i].tasks.findIndex(item => item.id === taskBox.id)
             myProjects[i].removeTask(findTask)
-            taskBoxList.removeChild(taskBox)
             localStorage.setItem('projects', JSON.stringify(myProjects))
+            taskBoxList.removeChild(taskBox)
         })
 
 
@@ -755,8 +754,6 @@ function renderLocalStorage(){
                 document.getElementById("low").checked = true
             }
 
-
-        
         }
     }
 }
@@ -795,7 +792,6 @@ console.log(myProjects)
     project.appendChild(modal)
     modal.appendChild(modalContent)
     bottomInterface.appendChild(rightSide)
-    rightSide.appendChild(tasks)
     input.appendChild(inputTitle)
     input.appendChild(addButton)
     modalContent.appendChild(closeButton)
