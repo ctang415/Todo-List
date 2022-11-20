@@ -1,14 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
-
-
 html {
     background: url('./blue.png');
     background-size: cover;
 }
-
-
 
 .flex {
     display: flex;
@@ -28,8 +24,8 @@ html {
     background-color: white;
     border-radius: 10px;
     padding: 1rem;
-    
 }
+
 .top {
     display: flex;
     justify-content: space-evenly;
@@ -85,7 +81,6 @@ li {
     cursor: pointer;
 }
 
-
 .modal {
     display: none; 
     position: fixed;
@@ -119,7 +114,6 @@ li {
     width: 40%;
     height: 45%;
     font-size: 2.5vw;
-
   }
 
   .buttons {
@@ -148,7 +142,6 @@ li {
     padding: 1rem;
     width: 80%;
 }
-
 
 .projectDiv {
     font-size: 1.8vw;
@@ -241,7 +234,6 @@ li {
     margin-top: 1vw;
 }
 
-
 .taskBoxesGrid {
     display: grid;
     grid-template-columns: 5% 90% 5%;
@@ -266,7 +258,6 @@ li {
 .myTrash {
     height: 2.9vw;
 }
-
 
 .taskBoxDescription {
     display: flex;
@@ -329,7 +320,6 @@ input[type='radio'] {
         padding: 3px;
     }
 
-
     li {
         font-family: 'Bebas Neue';
         font-size: 4vw;
@@ -386,7 +376,6 @@ input[type='radio'] {
         padding: 6px;
     }
     
-    
     .projectDiv {
         font-size: 2.5vw;
         background-color: rgb(245, 238, 228);
@@ -396,6 +385,7 @@ input[type='radio'] {
         flex-direction: row;
         justify-content: space-between;
     }
+
     #submitButton, #submitButtonTwo {
         border-radius: 7px;
         padding: 0.5rem;
@@ -417,93 +407,94 @@ input[type='radio'] {
         width: 17vw;
     }
 
+    .taskBoxesGrid {
+        display: grid;
+        grid-template-columns: 5% 90% 5%;
+        grid-template-rows: minmax(1fr 1fr);
+        margin-left: 10px;
+        background-color:rgb(228, 241, 245); 
+        font-size: 3.5vw;
+        padding: 6px;
+        border-radius: 5px;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
+        row-gap: 15px;
+    }
 
-.taskBoxesGrid {
-    display: grid;
-    grid-template-columns: 5% 90% 5%;
-    grid-template-rows: minmax(1fr 1fr);
-    margin-left: 10px;
-    background-color:rgb(228, 241, 245); 
-    font-size: 3.5vw;
-    padding: 6px;
-    border-radius: 5px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-    row-gap: 15px;
-}
-.modalTask {
-    text-align: center;
-    background-color: #fefefe;
-    margin: 20% auto;
-    padding: 15px;
-    border: 1px solid #888;
-    width: 65%;
-    height: 35%;
+    .modalTask {
+        text-align: center;
+        background-color: #fefefe;
+        margin: 20% auto;
+        padding: 15px;
+        border: 1px solid #888;
+        width: 65%;
+        height: 35%;
+    }
 
-  }
+    .taskIcons {
+        display:flex;
+        flex-direction: row;
+        align-self: center;
+        justify-content: flex-end;
+        gap: 6px;
+        margin-right: 10px;
+    }
 
-  .taskIcons {
-    display:flex;
-    flex-direction: row;
-    align-self: center;
-    justify-content: flex-end;
-    gap: 6px;
-    margin-right: 10px;
-}
-.taskBoxDescription {
-    display: flex;
-    font-family: 'Poppins';
-    font-size: 2.3vw;
-}
+    .taskBoxDescription {
+        display: flex;
+        font-family: 'Poppins';
+        font-size: 2.3vw;
+    }
 
-.taskBoxPriority {
-    display: flex;
-    font-family: 'Poppins';
-    font-size: 2.3vw;
-}
+    .taskBoxPriority {
+        display: flex;
+        font-family: 'Poppins';
+        font-size: 2.3vw;
+    }
 
-.taskInputs {
-    width: 100%;
-    height: 2.5vw;
-}
+    .taskInputs {
+        width: 100%;
+        height: 2.5vw;
+    }
 
-.taskLabels {
-    font-size: 3.0vw;
-}
-input[type='radio'] { 
-    transform: scale(0.8); 
-}
+    .taskLabels {
+        font-size: 3.0vw;
+    }
 
-input[type=checkbox] {
-    transform: scale(0.7);
-}
+    input[type='radio'] { 
+        transform: scale(0.8); 
+    }
 
-.add {
-    margin-top: 15px;
-    border-radius: 7px;
-    padding: 0.8vw;
-    width: 4rem;
-  }
+    input[type=checkbox] {
+        transform: scale(0.7);
+    }
 
-  .addTask {
-    border-radius: 5px;
-    border-color: silver;
-    border-style: solid;
-    background-color: white;
-    font-family: 'Bebas Neue';
-    cursor: pointer;
-    font-size: 2.7vw;
-    padding: 6px;
-}
+    .add {
+        margin-top: 15px;
+        border-radius: 7px;
+        padding: 0.8vw;
+        width: 4rem;
+    }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px;
-    font-family: 'Bebas Neue';
-    font-size: 5vw;
-    align-items: center;
-}
+    .addTask {
+        border-radius: 5px;
+        border-color: silver;
+        border-style: solid;
+        background-color: white;
+        font-family: 'Bebas Neue';
+        cursor: pointer;
+        font-size: 2.7vw;
+        padding: 6px;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+        font-family: 'Bebas Neue';
+        font-size: 5vw;
+        align-items: center;
+    }
 }
