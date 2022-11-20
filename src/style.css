@@ -311,7 +311,7 @@ li {
 }
 
 input[type=checkbox] {
-    transform: scale(0.6);
+    transform: scale(1.2);
 }
 
 input[type='radio'] { 
@@ -476,7 +476,7 @@ input[type='radio'] {
 }
 
 input[type=checkbox] {
-    transform: scale(2.0);
+    transform: scale(0.6);
 }
 
 .add {
