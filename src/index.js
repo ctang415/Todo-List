@@ -612,7 +612,6 @@ function renderLocalStorage(){
         const taskSpanDescription = document.createElement('div')
         const taskSpanPriority = document.createElement('div')
         checkBox.type = 'checkbox'
-        checkBox.classList.add('checkBox')
         taskBox.classList.add('taskBoxesGrid')
         taskBoxArea.classList.add('taskArea')
         const taskIcons = document.createElement('div')

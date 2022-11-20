@@ -62,14 +62,15 @@ li {
     border-right: solid grey;
     padding-right: 1.5vw;
     overflow:auto;
-    height: clamp(480px, 37vw, 40vw);
+    height: clamp(510px, 37vw, 40vw);
+    gap: 10px;
 }
 
 .rightSide {
     display: flex;
     flex-direction: column;
     overflow:auto;
-    height: clamp(480px, 37vw, 40vw);
+    height: clamp(510px, 37vw, 40vw);
 }
 
 .projectplus {
@@ -200,7 +201,8 @@ li {
     justify-content: space-between;
     padding: 10px;
     font-family: 'Bebas Neue';
-    font-size: 3vw;
+    font-size: 3.1vw;
+    align-items: center;
 }
 
 .addTask {
@@ -308,8 +310,8 @@ li {
     cursor: pointer;
 }
 
-.checkBox {
-    height: 1.5vw;
+input[type=checkbox] {
+    transform: scale(1.5);
 }
 
 input[type='radio'] { 
@@ -327,6 +329,7 @@ input[type='radio'] {
         padding: 3px;
     }
 
+
     li {
         font-family: 'Bebas Neue';
         font-size: 4vw;
@@ -338,7 +341,7 @@ input[type='radio'] {
         flex-direction: row;
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bolder;
-        font-size: 3vw;
+        font-size: 4vw;
         grid-column: 1;
         color: teal;
         padding-left: 1vw;
@@ -351,7 +354,7 @@ input[type='radio'] {
         justify-content: flex-start;
         align-items: center;
         font-family: 'Bebas Neue';
-        font-size: 3vw;
+        font-size: 4vw;
         grid-column: 1;
         border-right: solid grey;
         padding-right: 1.5vw;
@@ -472,6 +475,10 @@ input[type='radio'] {
     transform: scale(0.8); 
 }
 
+input[type=checkbox] {
+    transform: scale(2.0);
+}
+
 .add {
     margin-top: 15px;
     border-radius: 7px;
@@ -486,7 +493,17 @@ input[type='radio'] {
     background-color: white;
     font-family: 'Bebas Neue';
     cursor: pointer;
-    font-size: 1vw;
-    padding: 4px;
+    font-size: 2.7vw;
+    padding: 6px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: 'Bebas Neue';
+    font-size: 5vw;
+    align-items: center;
 }
 }
