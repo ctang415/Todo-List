@@ -137,7 +137,7 @@ function createInterface() {
     dateTaskInput.value = today
     let currentDate = today
     
-    box.classList.add('boxClass')
+
     titleText.classList.add('flex')
     projectInterface.classList.add('grid')
     topInterface.classList.add('top')
@@ -447,9 +447,9 @@ function createInterface() {
         myExpand.src = Expand
         myEdit.src = Edit
         myTrash.src = Trash
-        myExpand.setAttribute('style', 'height: 2.8vw')
-        myEdit.setAttribute('style', 'height: 2.6vw')
-        myTrash.setAttribute('style', 'height: 2.9vw')
+        myExpand.classList.add('myExpand')
+        myEdit.classList.add('myEdit')
+        myTrash.classList.add('myTrash')
         myExpand.classList.add('cursor')
         myEdit.classList.add('cursor')
         myTrash.classList.add('cursor')

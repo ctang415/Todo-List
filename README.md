@@ -1,1 +1,4 @@
 # Todo-List
+A fun yet challenging project!
+
+Some things I had to learn to make this project work were media queries for mobile responsiveness and localstorage to recreate projects and todos on page refreshes. I feel like I definitely did not optimize my code the best because I had to copy and paste my create tasks function and alter the code so that my localstorage data would be able to recreate the tasks. I also feel like the amount of DOM elements needed for the project made it difficult for me to name the variables better, so I need to revisit the project later and work on making my variable names more unique.

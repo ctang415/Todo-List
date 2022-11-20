@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    body {
-      background: #999;
-      width: 100%;
-    }
-  }
-
 
 
 html {
@@ -69,14 +62,14 @@ li {
     border-right: solid grey;
     padding-right: 1.5vw;
     overflow:auto;
-    height: 40vw;
+    height: clamp(480px, 37vw, 40vw);
 }
 
 .rightSide {
     display: flex;
     flex-direction: column;
     overflow:auto;
-    height: 40vw;
+    height: clamp(480px, 37vw, 40vw);
 }
 
 .projectplus {
@@ -109,7 +102,7 @@ li {
     text-align: center;
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 0.2rem;
+    padding: 1rem;
     border: 1px solid #888;
     width: 25vw;
     height: 11.5vw;
@@ -151,7 +144,8 @@ li {
   }
 
 .inputTitle {
-    padding: 0.5rem;
+    padding: 1rem;
+    width: 80%;
 }
 
 
@@ -217,6 +211,7 @@ li {
     font-family: 'Bebas Neue';
     cursor: pointer;
     font-size: 1vw;
+    padding: 1.2vw;
 }
 
 #form {
@@ -258,6 +253,16 @@ li {
     align-items: center;
     gap: 5px;
     row-gap: 15px;
+}
+
+.myExpand {
+    height: 2.8vw;
+}
+.myEdit {
+    height: 2.6vw;
+}
+.myTrash {
+    height: 2.9vw;
 }
 
 
@@ -309,4 +314,179 @@ li {
 
 input[type='radio'] { 
     transform: scale(1.2); 
+}
+
+@media only screen and (min-device-width:320px) and (max-device-width: 480px) {
+    .grid {
+        margin-left: 5vw;
+        margin-right: 5vw;
+        display: grid;
+        grid-template-rows: 1fr 20fr;
+        background-color: white;
+        border-radius: 5px;
+        padding: 3px;
+    }
+
+    li {
+        font-family: 'Bebas Neue';
+        font-size: 4vw;
+        list-style-type: none;
+    }
+
+    .projectplus {
+        display: flex;
+        flex-direction: row;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bolder;
+        font-size: 3vw;
+        grid-column: 1;
+        color: teal;
+        padding-left: 1vw;
+        cursor: pointer;
+    }
+
+    .project {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: 'Bebas Neue';
+        font-size: 3vw;
+        grid-column: 1;
+        border-right: solid grey;
+        padding-right: 1.5vw;
+        overflow:auto;
+        height: clamp(480px, 37vw, 40vw);
+    }
+
+    .projectDiv {
+        font-size: 1.8vw;
+        background-color: rgb(245, 238, 228);
+        padding: 1px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .modal-content {
+        text-align: center;
+        background-color: #fefefe;
+        margin: 35% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 130px;
+        height: 100px;
+        font-size: 3.5vw;
+      }
+
+    .inputTitle {
+        padding: 6px;
+    }
+    
+    
+    .projectDiv {
+        font-size: 2.5vw;
+        background-color: rgb(245, 238, 228);
+        padding: 6px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    #submitButton, #submitButtonTwo {
+        border-radius: 7px;
+        padding: 0.5rem;
+        width: 6rem;
+    }
+
+    .image {
+    height: 2.5vw;
+    }
+
+    .imageOther {
+    height:2.7vw;
+    }
+
+    .stretch {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 17vw;
+    }
+
+
+.taskBoxesGrid {
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    grid-template-rows: minmax(1fr 1fr);
+    margin-left: 10px;
+    background-color:rgb(228, 241, 245); 
+    font-size: 3.5vw;
+    padding: 6px;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    row-gap: 15px;
+}
+.modalTask {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 15px;
+    border: 1px solid #888;
+    width: 60%;
+    height: 30%;
+
+  }
+
+  .taskIcons {
+    display:flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-right: 10px;
+}
+.taskBoxDescription {
+    display: flex;
+    font-family: 'Poppins';
+    font-size: 2.3vw;
+}
+
+.taskBoxPriority {
+    display: flex;
+    font-family: 'Poppins';
+    font-size: 2.3vw;
+}
+
+.taskInputs {
+    width: 100%;
+    height: 2.5vw;
+}
+
+.taskLabels {
+    font-size: 3.0vw;
+}
+input[type='radio'] { 
+    transform: scale(0.8); 
+}
+
+.add {
+    margin-top: 15px;
+    border-radius: 7px;
+    padding: 0.8vw;
+    width: 4rem;
+  }
+
+  .addTask {
+    border-radius: 5px;
+    border-color: silver;
+    border-style: solid;
+    background-color: white;
+    font-family: 'Bebas Neue';
+    cursor: pointer;
+    font-size: 1vw;
+    padding: 4px;
+}
 }
